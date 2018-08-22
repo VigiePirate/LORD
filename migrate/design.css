@@ -1,0 +1,143 @@
+html
+{
+
+}
+
+body
+{
+	background-color: #EEEEEE;
+	margin: auto;
+	width: 890px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#entete
+{
+	background-image: url("images/ban.png");
+	height: 100px;
+	margin-bottom: 5px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#menu
+{
+	background-color: #DDDDDD;
+	margin-bottom: 5px;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+#menu a
+{
+	color: black;
+	text-decoration: none;
+	text-shadow: #666666 2px 2px 2px;
+	margin-left: 15px;
+}
+
+#menu a:hover
+{
+	text-shadow: none;
+}
+
+#corps
+{
+	background-color: #DDDDDD;
+	margin-bottom: 5px;
+	padding: 10px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+#corps p, #corps h1, #corps h2, #corps h3, #corps h6
+{
+	text-align: center;
+}
+
+#corps h3, #corps h5, #corps h6
+{
+	margin: 2px;
+}
+
+.classic
+{
+	text-align: center;
+	margin: auto;
+}
+
+.classic th
+{
+	background-color: #4C6078;
+	color: #FFFFFF;
+}
+
+.classic td
+{
+	background-color: #BBBBBB;
+}
+
+.classic img
+{
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.form
+{
+	text-align: left; 
+	margin: auto;
+	background-color: #BBBBBB;
+	border: outset 2px #DDDDDD;
+	padding: 5px;
+}
+
+#pied
+{
+	background-color: #DDDDDD;
+	padding: 10px;
+	border-radius: 10px;
+	overflow: hidden;
+	text-align: center;
+}
+
+#pied table
+{
+	text-align: left;
+}
+
+.green
+{
+	color: green
+}
+
+.orange
+{
+	color: orange;
+}
+
+.purple
+{
+	color: purple;
+}
+
+.red
+{
+	color: red;
+}
+
+.yellow
+{
+	color: yellow;
+}
+
+h1
+{
+	text-align: center;
+}
+
+a
+{
+	text-decoration: none;
+}
