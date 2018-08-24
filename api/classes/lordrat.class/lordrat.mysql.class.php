@@ -1,5 +1,7 @@
 <?php
 
+//Include des fichiers par classe après split
+
 require("lordrat.mysql.main.class.php");
 require("lordrat.mysql.articles.class.php");
 require("lordrat.mysql.auth.class.php");
