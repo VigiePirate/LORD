@@ -1,12 +1,9 @@
 <?php
-	// attribut rajouté à des fin de débuggage
-	//@TODO: virer ça
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	// Récupération des sections
 	$req = $bdd->query("
-	SELECT sc.id id_section, sc.nom nom_section, sc.description desc_section
-	FROM sections_contenus sc
-	ORDER BY sc.id");
+	SELECT s.id id_section, s.nom nom_section, s.desc desc_section
+	FROM sections s
+	ORDER BY s.id");
 	
 	$sections = $req->fetchAll();
 	
@@ -18,17 +15,12 @@
 			<li><div id='box1'></div>
 			<ul id='list1'>";
 	
-	$req = $bdd->prepare(
-		"SELECT * 
-		FROM articles a
-		INNER JOIN articles_contenus ac ON a.id=ac.id
-		WHERE section = :id_section"
-	);
+	$req = $bdd->prepare("SELECT * FROM articles WHERE section = :id_section");
 	$req->execute(array("id_section" => $sections[0]['id_section']));
 	
 	while($donnees = $req->fetch())
 	{
-		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['description'])."'>".$donnees['titre']."</a>";
+		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['desc'])."'>".$donnees['titre']."</a>";
 	}
 	
 	$req->closeCursor();
@@ -38,17 +30,12 @@
 			<li><a id='box2' href='index.php?page=".$sections[1]['nom_section']."' title='".$sections[1]['desc_section']."'></a>
 			<!--<ul id='list2'>";
 	
-	$req = $bdd->prepare(
-		"SELECT * 
-		FROM articles a
-		INNER JOIN articles_contenus ac ON a.id=ac.id
-		WHERE section = :id_section"
-	);
+	$req = $bdd->prepare("SELECT * FROM articles WHERE section = :id_section");
 	$req->execute(array("id_section" => $sections[1]['id_section']));
 	
 	while($donnees = $req->fetch())
 	{
-		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['description'])."'>".$donnees['titre']."</a>";
+		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['desc'])."'>".$donnees['titre']."</a>";
 	}
 	
 	$req->closeCursor();
@@ -58,17 +45,12 @@
 			<li><div id='box3'></div>
 			<ul id='list3'>";
 	
-	$req = $bdd->prepare(
-		"SELECT * 
-		FROM articles a
-		INNER JOIN articles_contenus ac ON a.id=ac.id
-		WHERE section = :id_section"
-	);
+	$req = $bdd->prepare("SELECT * FROM articles WHERE section = :id_section");
 	$req->execute(array("id_section" => $sections[2]['id_section']));
 	
 	while($donnees = $req->fetch())
 	{
-		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['description'])."'>".$donnees['titre']."</a>";
+		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['desc'])."'>".$donnees['titre']."</a>";
 	}
 	
 	$req->closeCursor();
@@ -78,18 +60,12 @@
 			<li><div id='box4'></div>
 			<ul id='list4'>";
 	
-	$req = $bdd->prepare(
-		"SELECT * 
-		FROM articles a
-		INNER JOIN articles_contenus ac ON a.id=ac.id
-		WHERE section = :id_section"
-	);
-
+	$req = $bdd->prepare("SELECT * FROM articles WHERE section = :id_section");
 	$req->execute(array("id_section" => $sections[3]['id_section']));
 	
 	while($donnees = $req->fetch())
 	{
-		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['description'])."'>".$donnees['titre']."</a>";
+		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['desc'])."'>".$donnees['titre']."</a>";
 	}
 	
 	$req->closeCursor();
@@ -101,18 +77,12 @@
 			<li><div id='box6'></div>
 			<ul id='list5'>";
 	
-	$req = $bdd->prepare(
-		"SELECT * 
-		FROM articles a
-		INNER JOIN articles_contenus ac ON a.id=ac.id
-		WHERE section = :id_section"
-	);
-
+	$req = $bdd->prepare("SELECT * FROM articles WHERE section = :id_section");
 	$req->execute(array("id_section" => $sections[5]['id_section']));
 	
 	while($donnees = $req->fetch())
 	{
-		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['description'])."'>".$donnees['titre']."</a>";
+		echo "<li><a href='index.php?page=article&amp;load=".$donnees['nom']."' title='".addslashes($donnees['desc'])."'>".$donnees['titre']."</a>";
 	}
 	
 	$req->closeCursor();
