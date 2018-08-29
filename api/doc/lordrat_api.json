@@ -1,18 +1,18 @@
 {
 	"articles": {
-		"add": null,
+		"add": "TODO",
 		"get": {
 			"id": "int",
 			"nom": "string"
 		},
-		"delete": null,
+		"delete": "TODO",
 		"list": {
 			"auteur": "string",
 			"content": "string",
 			"order": "string",
 			"section": "string"
 		},
-		"save": null
+		"save": "TODO"
 	},
 	"criteres": {
 		"add": {
@@ -38,6 +38,346 @@
 		"save": {
 			"id": "int",
 			"nom": "string"
+		}
+	},
+	"medias": {
+		"add": {
+			"fichier": "string",
+			"nom": "string",
+			"desc": null,
+			"auteur": "int",
+			"meta": null
+		},
+		"delete": {
+			"id": "int"
+		},
+		"get": {
+			"id": "int"
+		},
+		"list": {
+			"order": "string",
+			"content": "string",
+			"start": "int",
+			"quantity": "int"
+		},
+		"save": null
+	},
+	"portees": {
+		"add": {
+			"old_id": "int",
+			"id_pere": "int",
+			"id_mere": "int",
+			"user": "int",
+			"date_accouchement": "int",
+			"nombres_petits": "int",
+			"commentaires": "string"
+		},
+		"get": {
+			"id": "int",
+			"old_id": "int"
+		},
+		"delete": "TODO",
+		"list": "TODO",
+		"save": "TODO"
+	},
+	"rateries": {
+		"add": {
+			"id_membre": "int",
+			"affixe": "string",
+			"nom": "string",
+			"presentation": "string",
+			"logo": "string",
+			"status": "int",
+			"on_map": "int",
+			"user": "int",
+			"date_ajout": "int",
+			"date_last_edit": "int"
+		},
+		"count": null,
+		"delete": "TODO",
+		"get": {
+			"base": {
+				"id": "int",
+				"affixe": "string",
+				"proprio": "int"
+			}
+		},
+		"list": {
+			"order": "string",
+			"content": "string",
+			"start": "int",
+			"quantity": "int"
+		},
+		"map": {
+			"toggle": "int",
+			"id": "int"
+		},
+		"save": "TODO",
+		"search": "TODO"
+	},
+	"rats": {
+		"add": {
+			"base": {
+				"raterie": "int",
+				"nom_courant": "string",
+				"nom_naissance": "string",
+				"sexe": "string",
+				"numero": "string",
+				"pere": "int",
+				"mere": "int",
+				"vivant": "string",
+				"pb_santes": "int",
+				"date_naissance": "int",
+				"date_deces": "int",
+				"cause_deces": "int",
+				"user": "int",
+				"couleur": "int",
+				"dilution": "int",
+				"marquage": "int",
+				"oreilles": "int",
+				"poils": "int",
+				"uniques": [
+				],
+				"yeux": "int",
+				"portee": "int",
+				"repro": "string",
+				"repro_date": "int",
+				"commentaires": "string",
+				"date_ajout": "int",
+				"date_user_view": "int",
+				"date_last_edit": "int",
+				"sav_check": "string",
+				"etat": "int"
+			},
+			"image": {
+				"id_rat": "int",
+				"fichier": "string",
+				"nom_naissance": "string",
+				"status": "int",
+				"date_ajout": "int",
+				"date_user_view": "int",
+				"date_last_edit": "int"
+			}
+		},
+		"get": {
+			"base": {
+				"id": "int",
+				"numero": "string"
+			},
+			"descendance": {
+				"id": "int"
+			},
+			"full": "TODO",
+			"genealogie": {
+				"id": "int"
+			},
+			"image": {
+				"id_rat": "int"
+			}
+		},
+		"count": {
+			"sav": "int"
+		},
+		"delete": "TODO",
+		"list": {
+			"fastsearch": "string",
+			"numero": "string",
+			"nom": "string",
+			"origine": "string",
+			"proprio": "string",
+			"sexe": "string",
+			"vivant": "string",
+			"couleur": "int",
+			"dilution": "int",
+			"marquage": "int",
+			"oreilles": "int",
+			"poils": "int",
+			"uniques": [
+			],
+			"yeux": "int",
+			"etat": "int",
+			"order": "string",
+			"content": "string",
+			"start": "int",
+			"quantity": "int"
+		},
+		"sav": {
+			"add": {
+				"rat": "int",
+				"user": "int",
+				"message": "string"
+			},
+			"list": {
+				"rat": "int",
+				"user": "int",
+				"recent": "boolean"
+			},
+			"status": {
+				"rat": "int",
+				"status": "int"
+			}
+		},
+		"save": {
+			"base": {
+				"raterie": "int",
+				"nom_courant": "string",
+				"nom_naissance": "string",
+				"sexe": "string",
+				"numero": "string",
+				"pere": "int",
+				"mere": "int",
+				"vivant": "string",
+				"pb_santes": "int",
+				"date_naissance": "int",
+				"date_deces": "int",
+				"cause_deces": "int",
+				"user": "int",
+				"couleur": "int",
+				"dilution": "int",
+				"marquage": "int",
+				"oreilles": "int",
+				"poils": "int",
+				"uniques": [
+				],
+				"yeux": "int",
+				"portee": "int",
+				"repro": "string",
+				"repro_date": "int",
+				"commentaires": "string",
+				"date_ajout": "int",
+				"date_user_view": "int",
+				"date_last_edit": "int",
+				"sav_check": "string",
+				"etat": "int"
+			},
+			"image": {
+				"id_rat": "int",
+				"fichier": "string",
+				"nom_naissance": "string",
+				"status": "int",
+				"date_ajout": "int",
+				"date_user_view": "int",
+				"date_last_edit": "int"
+			}
+		}
+	},
+	"section": {
+		"get": {
+			"id": "int",
+			"nom": "string"
+		},
+		"list": {
+			"content": "string"
+		},
+		"save": "TODO"
+	},
+	"stats": {
+		"get": {
+			"base": null
+		}
+	},
+	"utilisateurs": {
+		"add": {
+			"adresse": {
+				"id_membre": "int",
+				"adresse": "string",
+				"cp": "string",
+				"ville": "string",
+				"pays": "string",
+				"geoname": "int",
+				"lat": "float",
+				"lng": "float"
+			},
+			"base": {
+				"old_id": "int",
+				"email": "string",
+				"mdp": "string",
+				"pseudo": "string",
+				"level": "string",
+				"date_naissance": "int",
+				"date_inscription": "int",
+				"date_maj": "int"
+			},
+			"nom": {
+				"id_membre": "int",
+				"civilite": "int",
+				"prenom": "string",
+				"nom": "string"
+			},
+			"site": {
+				"id_membre": "int",
+				"nom": "string",
+				"url": "url"
+			}
+		},
+		"auth": {
+			{
+				"email": "email",
+				"password": "string"
+			},
+			{
+				"token": "string",
+				"client_ip": "string"
+			}
+		},
+		"get": {
+			"adresse": {
+				"id": "int"
+			},
+			"base": {
+				"id": "int",
+				"old_id": "int",
+				"email": "string",
+				"pseudo": "string"
+			},
+			"fiche": {
+				"id": "int"
+			},
+			"site": {
+				"id": "int"
+			},
+			"full": {
+				"id": "int",
+				"old_id": "int",
+				"email": "string",
+				"pseudo": "string"
+			}
+		},
+		"list": null,
+		"delete": "TODO",
+		"save": {
+			"adresse": {
+				"id_membre": "int",
+				"adresse": "string",
+				"cp": "string",
+				"ville": "string",
+				"pays": "string",
+				"geoname": "int",
+				"lat": "float",
+				"lng": "float"
+			},
+			"base": {
+				"id_membre": "int",
+				"old_id": "int",
+				"email": "string",
+				"mdp": "string",
+				"pseudo": "string",
+				"level": "string",
+				"date_naissance": "int",
+				"date_inscription": "int",
+				"date_maj": "int"
+			},
+			"nom": {
+				"id_membre": "int",
+				"civilite": "int",
+				"prenom": "string",
+				"nom": "string"
+			},
+			"site": {
+				"id_membre": "int",
+				"nom": "string",
+				"url": "url"
+			}
 		}
 	}
 }
