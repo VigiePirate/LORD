@@ -1,0 +1,44 @@
+{
+	"articles": {
+		"add": null,
+		"get": {
+			"id": "int",
+			"nom": "string"
+		},
+		"delete": null,
+		"list": {
+			"auteur": "string",
+			"content": "string",
+			"order": "string",
+			"section": "string"
+		},
+		"save": null
+	},
+	"criteres": {
+		"add": {
+			"nom": "string"
+		},
+		"delete": {
+			"id": "int"
+		},
+		"get": {
+			"id": "int",
+			"nom": "string"
+		},
+		"list": {
+			"order": "string",
+			"content": "string",
+			"start": "int",
+			"quantity": "int"
+		},
+		"move": {
+			"source": "int",
+			"cible": "int"
+		},
+		"save": {
+			"id": "int",
+			"nom": "string"
+		}
+	}
+}
+
