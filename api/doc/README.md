@@ -24,8 +24,8 @@ puisse développer tranquillement sur ses instances locales (classes/api.class/a
 ```
 
 
-Ces identifiants sont stockés dans la base MySQL **lord\_api**, table *api\_apps* et les clés identifiant les
-applications clientes et leurs adresses IP dans *api\_keys*.
+Les identifiants d'application sont stockés dans la base MySQL **lord\_api**, table *api\_apps* et les clés
+identifiant les applications clientes et leurs adresses IP dans *api\_keys*.
 
 Le routage vers la bonne application, selon son identifiant, et l'instanciation des classes sont effectués
 dans index.php et l'analyse des arguments de l'URL est effectuée par le fichier correspondant dans le
@@ -64,9 +64,23 @@ Ou bien
 
 L'argument `method` n'a en fait pas de raison d'exister dans l'URL car c'est la méthode HTTP qui doit déterminer le
 type d'opération. L'URL ne devrait spécifier que les ressources auxquelles cette opération s'applique. Cela
-implique de revoir les appels à l'API dans les applications _front_ et _admin_.
+implique une refonte complète de l'API et de revoir les appels à l'API dans les applications _front_ et _admin_.
 
-Cf. la [liste des modules et de leurs arguments](./lordrat_api.json)
+Cf. la [liste des modules et de leurs arguments](./lordrat_api.json). Vite fait pour débroussailler mais
+permet de voir rapidement quels sont les arguments possibles pour l'API, et leurs types. À consulter avec jq
+ou avec un [éditeur json en ligne](https://jsoneditoronline.org/), par exemple.
+
+```
+$ jq '.rats.get|keys' < lordrat\_api.json 
+[
+  "base",
+  "descendance",
+  "full",
+  "genealogie",
+  "image"
+]
+
+```
 
 ## Rôle des classes
 

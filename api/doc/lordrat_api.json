@@ -311,14 +311,10 @@
 			}
 		},
 		"auth": {
-			{
-				"email": "email",
-				"password": "string"
-			},
-			{
-				"token": "string",
-				"client_ip": "string"
-			}
+			"email": "email",
+			"password": "string",
+			"token": "string",
+			"client_ip": "string"
 		},
 		"get": {
 			"adresse": {
@@ -381,4 +377,3 @@
 		}
 	}
 }
-
