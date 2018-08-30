@@ -68,7 +68,8 @@ implique une refonte complète de l'API et de revoir les appels à l'API dans le
 
 Cf. la [liste des modules et de leurs arguments](./lordrat_api.json). Vite fait pour débroussailler mais
 permet de voir rapidement quels sont les arguments possibles pour l'API, et leurs types. À consulter avec jq
-ou avec un [éditeur json en ligne](https://jsoneditoronline.org/), par exemple.
+ou avec un [éditeur json en ligne](https://jsoneditoronline.org/?id=3071360365f646d09a9c78a8e0642e17), par
+exemple.
 
 ```
 $ jq '.rats.get|keys' < lordrat\_api.json 
