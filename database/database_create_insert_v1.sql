@@ -62,6 +62,21 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `lord`.`lord_eyecolors`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `lord`.`lord_eyecolors` ;
+
+CREATE TABLE IF NOT EXISTS `lord`.`lord_eyecolors` (
+  `eyecolor_id` INT NOT NULL AUTO_INCREMENT,
+  `eyecolor_name_fr` VARCHAR(70) NULL,
+  `eyecolor_name_en` VARCHAR(70) NULL,
+  `eyecolor_picture` VARCHAR(255) NULL,
+  PRIMARY KEY (`eyecolor_id`))
+ENGINE = InnoDB
+COMMENT = 'Table contenant la liste des yeux';
+
+
+-- -----------------------------------------------------
 -- Table `lord`.`lord_colors`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lord`.`lord_colors` ;
@@ -69,9 +84,16 @@ DROP TABLE IF EXISTS `lord`.`lord_colors` ;
 CREATE TABLE IF NOT EXISTS `lord`.`lord_colors` (
   `color_id` INT NOT NULL AUTO_INCREMENT,
   `color_name_fr` VARCHAR(70) NULL,
+  `color_genotype` VARCHAR(70) NULL,
   `color_name_en` VARCHAR(70) NULL,
   `color_picture` VARCHAR(255) NULL,
-  PRIMARY KEY (`color_id`))
+  `eyecolor_id` INT NULL,
+  PRIMARY KEY (`color_id`),
+  CONSTRAINT `fk_lord_colors_lord_eyecolors1`
+    FOREIGN KEY (`eyecolor_id`)
+    REFERENCES `lord`.`lord_eyecolors` (`eyecolor_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -87,21 +109,6 @@ CREATE TABLE IF NOT EXISTS `lord`.`lord_earsets` (
   `earset_picture` VARCHAR(255) NULL,
   PRIMARY KEY (`earset_id`))
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `lord`.`lord_eyecolors`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `lord`.`lord_eyecolors` ;
-
-CREATE TABLE IF NOT EXISTS `lord`.`lord_eyecolors` (
-  `eyecolor_id` INT NOT NULL AUTO_INCREMENT,
-  `eyecolor_name_fr` VARCHAR(70) NULL,
-  `eyecolor_name_en` VARCHAR(70) NULL,
-  `eyecolor_picture` VARCHAR(255) NULL,
-  PRIMARY KEY (`eyecolor_id`))
-ENGINE = InnoDB
-COMMENT = 'Table contenant la liste des yeux';
 
 
 -- -----------------------------------------------------
@@ -527,7 +534,8 @@ CREATE TABLE IF NOT EXISTS `lord`.`lord_backoffice_rattery_messages` (
     REFERENCES `lord`.`lord_users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+COMMENT = 'Echange backoffice / utilisateur sur une fiche raterie\n\nUne ligne = un échange (<> aller retour backoffice utilisateur)';
 
 
 -- -----------------------------------------------------
@@ -571,15 +579,120 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `lord`.`lord_eyecolors`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lord`;
+INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Noir', NULL, NULL);
+INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Rouge', NULL, NULL);
+INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Dark rubis', NULL, NULL);
+INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Rose', NULL, NULL);
+INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Vairon', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `lord`.`lord_colors`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lord`;
-INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_name_en`, `color_picture`) VALUES (1, 'Noir', NULL, NULL);
-INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_name_en`, `color_picture`) VALUES (2, 'Agouti', NULL, NULL);
-INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_name_en`, `color_picture`) VALUES (3, 'Bleu us', NULL, NULL);
-INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_name_en`, `color_picture`) VALUES (4, 'Bleu russe', NULL, NULL);
-INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_name_en`, `color_picture`) VALUES (5, 'Cannelle', NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Agouti', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre', 'Agouti + PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre bleu', 'Agouti + PED + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre dove', 'Agouti + PED + Mink + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre dove mock', 'Agouti + PED + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre lavande', 'Agouti + PED + Mink + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre lavande mock', 'Agouti + PED + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre mink', 'Agouti + PED + Mink', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre mock', 'Agouti + PED + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ambre russe', 'Agouti + PED + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige', 'Noir + RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige dove', 'Noir + RED + Mink + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige dove mock', 'Noir + RED + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige mink', 'Noir + RED + Mink', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige mock', 'Noir + RED + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Beige russe', 'Noir + RED + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Bleu russe', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Bleu russe agouti', 'Agouti + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Bleu us', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Bleu us agouti', 'Agouti + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Cannelle', 'Agouti + Mink', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Cannelle mock', 'Agouti + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Champagne', 'Noir + PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Champagne mink', 'Noir + PED + Mink', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Champagne mock', 'Noir + PED + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Champagne russe', 'Noir + PED + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Chocolat', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double bleu', 'Noir + Bus + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double bleu agouti', 'Agouti + Bus + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double cannelle bleu', 'Agouti + Mink + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double cannelle russe', 'Agouti + Mink + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double cannelle', 'Agouti + Mink + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double havane', 'Noir + Mink + Mock + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double havane agouti', 'Agouti + Mink + Mock + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double havane russe', 'Noir + Mink + Mock + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double havane russe agouti', 'Agouti + Mink + Mock + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double lilas', 'Noir + Mink + Mock + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double lilas agouti', 'Agouti + Mink + Mock + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double mink', 'Noir + Mink + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double mink bleu', 'Noir + Mink + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double mink russe', 'Noir + Mink + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka', 'Noir + Mink + Mock + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka agouti', 'Agouti + Mink + Mock + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka bleu', 'Noir + Mink + Mock + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka bleu agouti', 'Agouti + Mink + Mock + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka russe', 'Noir + Mink + Mock + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Double moka russe agouti', 'Agouti + Mink + Mock + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Dove', 'Noir + Mink + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Dove agouti', 'Agouti + Mink + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Dove mock', 'Noir + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Dove mock agouti', 'Agouti + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Graphite', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane', 'Noir + Mink + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane agouti', 'Agouti + Mink + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane mock', 'Noir + Mock + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane mock agouti', 'Agouti + Mock + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane russe', 'Noir + Mink + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane russe agouti', 'Agouti + Mink + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane russe mock', 'Noir + Mock + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Havane russe mock agouti', 'Agouti + Mock + Br + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ice', 'Noir + PED + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ice mink', 'Noir + PED + Mink + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Ice mock', 'Noir + PED + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lavande', 'Noir + Mink + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lavande agouti', 'Agouti + Mink + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lavande mock', 'Noir + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lavande mock agouti', 'Agouti + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lilas', 'Noir + Mink + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lilas agouti', 'Agouti + Mink + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lilas mock', 'Noir + Mock + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Lilas mock agouti', 'Agouti + Mock + Bus + porteur RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Mink', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Mock', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka', 'Noir + Mink + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka agouti', 'Agouti + Mink + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka bleu', 'Noir + Mink + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka bleu agouti', 'Agouti + Mink + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka bleu mock', 'Noir + Mock + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka bleu mock agouti', 'Agouti + Mock + Bus + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka mock', 'Noir + Mock + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka mock agouti', 'Agouti + Mock + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka russe', 'Noir + Mink + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka russe agouti', 'Agouti + Mink + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka russe mock', 'Noir + Mock + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Moka russe mock agouti', 'Agouti + Mock + Br + porteur PED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Noir', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Platine', 'Noir + RED + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Platine mink', 'Noir + RED + Mink + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Platine mock', 'Noir + RED + Mock + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze', 'Agouti + RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze bleu', 'Agouti + RED + Bus', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze dove', 'Agouti + RED + Mink + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze dove mock', 'Agouti + RED + Mock + Br', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze mink', 'Agouti + Mink + RED', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze mock', 'Agouti + RED + Mock', NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_colors` (`color_id`, `color_name_fr`, `color_genotype`, `color_name_en`, `color_picture`, `eyecolor_id`) VALUES (DEFAULT, 'Topaze russe', 'Agouti + RED + Br', NULL, NULL, NULL);
 
 COMMIT;
 
@@ -591,18 +704,6 @@ START TRANSACTION;
 USE `lord`;
 INSERT INTO `lord`.`lord_earsets` (`earset_id`, `earset_name_fr`, `earset_name_en`, `earset_picture`) VALUES (DEFAULT, 'Standard', NULL, NULL);
 INSERT INTO `lord`.`lord_earsets` (`earset_id`, `earset_name_fr`, `earset_name_en`, `earset_picture`) VALUES (DEFAULT, 'Dumbo', NULL, NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `lord`.`lord_eyecolors`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `lord`;
-INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Noir', NULL, NULL);
-INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Rouge', NULL, NULL);
-INSERT INTO `lord`.`lord_eyecolors` (`eyecolor_id`, `eyecolor_name_fr`, `eyecolor_name_en`, `eyecolor_picture`) VALUES (DEFAULT, 'Dark rubis', NULL, NULL);
 
 COMMIT;
 
@@ -636,8 +737,11 @@ START TRANSACTION;
 USE `lord`;
 INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Lisse', NULL, NULL);
 INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Rex', NULL, NULL);
-INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Double rex', NULL, NULL);
+INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Double-rex', NULL, NULL);
+INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Velours', NULL, NULL);
 INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Nu', NULL, NULL);
+INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Satin', NULL, NULL);
+INSERT INTO `lord`.`lord_coats` (`coat_id`, `coat_name_fr`, `coat_name_en`, `coat_picture`) VALUES (DEFAULT, 'Harley', NULL, NULL);
 
 COMMIT;
 
@@ -652,6 +756,20 @@ INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_na
 INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Hooded', NULL, NULL);
 INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Varieberk', NULL, NULL);
 INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Capé', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Berkshire', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Varihooded', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Bareback', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Variegated', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Masqué', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Dalmatien', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Patché', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Oppossum', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Husky', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Essex', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'Baldie', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'PEW', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'REW', NULL, NULL);
+INSERT INTO `lord`.`lord_markings` (`marking_id`, `marking_name_fr`, `marking_name_en`, `marking_picture`) VALUES (DEFAULT, 'BEW', NULL, NULL);
 
 COMMIT;
 
@@ -728,6 +846,9 @@ INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat
 INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37802, 'Tanannan', NULL, 'M', 'WEE37802M', '2013-11-22', '2016-01-23', 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
 INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37801, 'Manannan Mac Jean-Rat', 'Toutatis', 'M', 'WEE37801M', '2013-11-22', '2015-08-09', 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
 INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37806, 'Tuulikki', 'Aífé', 'F', 'WEE37806F', '2013-11-22', '2015-07-22', 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (23407, 'Nagual', 'Canis Mucilagus', 'M', 'KMR23407M', '2010-12-21', '2012-10-05', 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 11, 10, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31543, 'Woodewood Chuckchuck', NULL, 'M', 'TPX31543M', '2012-07-28', '2014-01-18', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29036, 23407, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31549, 'Piccadilly', NULL, 'F', 'TPX31549F', '2012-07-28', NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29306, 23407, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
 
 COMMIT;
 
