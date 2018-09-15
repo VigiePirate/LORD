@@ -7,7 +7,7 @@ L'admin et le front ont accès aux mêmes entités (dossier src/Entity), qui cor
 
 Pro :
 
-- un seul langage dominant (php) et un seul framework (symfony). Le JS est limité aux animations sur les pages et aux requêtes ajax. A noter qu'on utilise aussi un moteur de templating (twig), pour éviter d'avoir des <?php echo "toto"; ?> partout dans le html.
+- un seul langage dominant (php) et un seul framework (symfony). Le JS est limité aux animations sur les pages et aux requêtes ajax. A noter qu'on utilise aussi un moteur de templating (twig), pour éviter d'avoir des `<?php echo "toto"; ?>` partout dans le html.
 - moins de développement a priori (besoins en api beaucoup plus limités).
 - symfony possède un large écosystème (communauté, plugins) qui peuvent accélérer le dev.
 
