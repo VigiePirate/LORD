@@ -1,4 +1,4 @@
-#Principe d'une application "tout en un"
+# Principe d'une application "tout en un"
 
 C'est dans les dossiers src/Controller et templates que la distinction admin/front se fait principalement.
 L'annotation @Route dans le [controller principal de l'admin](https://github.com/VigiePirate/LORD/blob/symfony/lord/src/Controller/Admin/DashboardController.php) permet de lier une url à l'action d'un controller.
