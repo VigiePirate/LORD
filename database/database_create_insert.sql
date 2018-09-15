@@ -15,6 +15,18 @@ CREATE SCHEMA IF NOT EXISTS `lord` DEFAULT CHARACTER SET utf8mb4 ;
 USE `lord` ;
 
 -- -----------------------------------------------------
+-- Table `lord`.`lord_roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `lord`.`lord_roles` ;
+
+CREATE TABLE IF NOT EXISTS `lord`.`lord_roles` (
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `role_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`role_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `lord`.`lord_users`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lord`.`lord_users` ;
@@ -31,7 +43,15 @@ CREATE TABLE IF NOT EXISTS `lord`.`lord_users` (
   `user_newsletter` TINYINT(1) NULL,
   `user_date_creation` DATE NULL,
   `user_date_last_update` DATE NULL,
-  PRIMARY KEY (`user_id`))
+  `role_id` INT NULL,
+  `user_is_locked` TINYINT(1) NULL,
+  `user_failed_login_attempts` TINYINT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_lord_users_lord_roles1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `lord`.`lord_roles` (`role_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -257,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `lord`.`lord_rats` (
   `dilution_id` INT NULL,
   `coat_id` INT NULL,
   `marking_id` INT NULL,
-  `singularity_id_list` INT NULL,
+  `singularity_id_list` VARCHAR(15) NULL,
   `user_creator_id` INT NOT NULL,
   `rat_date_create` DATE NULL,
   `rat_date_last_update` DATE NULL,
@@ -368,10 +388,10 @@ DROP TABLE IF EXISTS `lord`.`lord_backoffice_rat_entries` ;
 CREATE TABLE IF NOT EXISTS `lord`.`lord_backoffice_rat_entries` (
   `lord_backoffice_rat_entry_id` INT NOT NULL AUTO_INCREMENT,
   `lord_backoffice_rat_entry_status` TINYINT NULL,
-  `rat_id` INT NOT NULL,
+  `rat_id` INT NULL,
   `rat_name_owner` VARCHAR(70) NULL,
   `rat_name_pup` VARCHAR(70) NULL,
-  `rat_sex` CHAR NOT NULL,
+  `rat_sex` CHAR NULL,
   `rat_pedigree_identifier` VARCHAR(10) NULL,
   `rat_date_birth` DATE NULL,
   `rat_date_death` DATE NULL,
@@ -395,8 +415,8 @@ CREATE TABLE IF NOT EXISTS `lord`.`lord_backoffice_rat_entries` (
   `dilution_id` INT NULL,
   `coat_id` INT NULL,
   `marking_id` INT NULL,
-  `singularity_id_list` INT NULL,
-  `user_creator_id` INT NOT NULL,
+  `singularity_id_list` VARCHAR(15) NULL,
+  `user_creator_id` INT NULL,
   `rat_date_create` DATE NULL,
   `rat_date_last_update` DATE NULL,
   PRIMARY KEY (`lord_backoffice_rat_entry_id`),
@@ -480,8 +500,6 @@ COMMENT = 'Table centrale, qui contient l\'ensemble des rats enregistrés';
 
 CREATE UNIQUE INDEX `rat_id_UNIQUE` ON `lord`.`lord_backoffice_rat_entries` (`lord_backoffice_rat_entry_id` ASC);
 
-CREATE UNIQUE INDEX `rat_numero_UNIQUE` ON `lord`.`lord_backoffice_rat_entries` (`rat_pedigree_identifier` ASC);
-
 
 -- -----------------------------------------------------
 -- Table `lord`.`lord_backoffice_rat_messages`
@@ -539,20 +557,32 @@ COMMENT = 'Echange backoffice / utilisateur sur une fiche raterie\n\nUne ligne =
 
 
 -- -----------------------------------------------------
+-- Data for table `lord`.`lord_roles`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lord`;
+INSERT INTO `lord`.`lord_roles` (`role_id`, `role_name`) VALUES (DEFAULT, 'user');
+INSERT INTO `lord`.`lord_roles` (`role_id`, `role_name`) VALUES (DEFAULT, 'admin');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `lord`.`lord_users`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lord`;
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (1, 'raterie@raterie-stella.com', '6cfab3c59675dc5c99353c5e6f5be008', 'F', 'VALIA', 'VERRIERE', 'stella', '1976-07-09', NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (2, 'administrateur@lord-rat.org', NULL, NULL, 'Admin', NULL, 'admin', NULL, NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (3, 'sine.alexia@free.fr', '5d81d465cfc6f03bff54c5709a4737ba', 'F', 'Alexia', 'Siné', 'Limë', '1984-02-05', NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (5, 'artefact@entierement.nu', 'e8a8f22e0ebfcfd17f6f6170208621d9', 'F', 'Nancy', 'Bertin', 'Artefact', '1981-08-01', NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (6, 'pa@paratsite.fr', '992e29d3b368923a6383f05cdd4b4aa2', 'F', 'Marie', 'PA', 'Petit_ange', NULL, NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (DEFAULT, 'vautier.joanna@hotmail.fr', '8dd377e29ca5356032dc15fcb4cd877a', 'F', 'Joanna', 'Vautier', 'm0ua-haha', '2013-04-14', NULL, '2013-04-14', '2013-04-14');
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (DEFAULT, 'lorelei91310@hotmail.fr', '30f4ebe2cb080527ad19d808d00b8d6f', 'F', 'Loreleï', 'AMAURY', 'Miss-lolo-91', '1998-05-26', NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (DEFAULT, 'pouikpouiky@gmail.com', NULL, 'F', NULL, NULL, 'Pinky', NULL, NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (DEFAULT, 'marinar@lenautilus.fr', NULL, 'F', NULL, NULL, 'kerma', NULL, NULL, NULL, NULL);
-INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`) VALUES (DEFAULT, 'nezumi30@sfr.fr', NULL, 'F', NULL, NULL, 'ramses30', NULL, NULL, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (1, 'raterie@raterie-stella.com', '6cfab3c59675dc5c99353c5e6f5be008', 'F', 'VALIA', 'VERRIERE', 'stella', '1976-07-09', NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (2, 'administrateur@lord-rat.org', NULL, NULL, 'Admin', NULL, 'admin', NULL, NULL, NULL, NULL, 2, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (3, 'sine.alexia@free.fr', '5d81d465cfc6f03bff54c5709a4737ba', 'F', 'Alexia', 'Siné', 'Limë', '1984-02-05', NULL, NULL, NULL, 2, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (5, 'artefact@entierement.nu', 'e8a8f22e0ebfcfd17f6f6170208621d9', 'F', 'Nancy', 'Bertin', 'Artefact', '1981-08-01', NULL, NULL, NULL, 2, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (6, 'pa@paratsite.fr', '992e29d3b368923a6383f05cdd4b4aa2', 'F', 'Marie', 'PA', 'Petit_ange', NULL, NULL, NULL, NULL, 2, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'vautier.joanna@hotmail.fr', '8dd377e29ca5356032dc15fcb4cd877a', 'F', 'Joanna', 'Vautier', 'm0ua-haha', '2013-04-14', NULL, '2013-04-14', '2013-04-14', 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'lorelei91310@hotmail.fr', '30f4ebe2cb080527ad19d808d00b8d6f', 'F', 'Loreleï', 'AMAURY', 'Miss-lolo-91', '1998-05-26', NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'pouikpouiky@gmail.com', NULL, 'F', NULL, NULL, 'Pinky', NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'marinar@lenautilus.fr', NULL, 'F', NULL, NULL, 'kerma', NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'nezumi30@sfr.fr', NULL, 'F', NULL, NULL, 'ramses30', NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `lord`.`lord_users` (`user_id`, `user_email`, `user_password`, `user_sex`, `user_name_first`, `user_name_last`, `user_login`, `user_date_birth`, `user_newsletter`, `user_date_creation`, `user_date_last_update`, `role_id`, `user_is_locked`, `user_failed_login_attempts`) VALUES (DEFAULT, 'laurielegeret@free.fr', NULL, 'F', 'Laurie ', 'Legeret', 'louli', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -779,20 +809,20 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lord`;
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Cause inconnue', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Accidents, traumatismes, intoxications', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Cardio-vasculaire', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Digestif', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Mortalité infantile (moins de 6 semaines)', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Muscles et squelette', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Neurologique (cerveau, moelle épinière, nerfs)', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Œil, oreille, bouche, face', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Peau', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Respiratoire', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Système reproducteur', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Système urinaire (reins, vessie)', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Vieillesse, mort naturelle (24 mois minimum)', NULL);
-INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (DEFAULT, 'Autres', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (1, 'Cause inconnue', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (2, 'Accidents, traumatismes, intoxications', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (3, 'Cardio-vasculaire', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (4, 'Digestif', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (5, 'Mortalité infantile (moins de 6 semaines)', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (6, 'Muscles et squelette', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (7, 'Neurologique (cerveau, moelle épinière, nerfs)', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (8, 'Œil, oreille, bouche, face', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (9, 'Peau', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (10, 'Respiratoire', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (11, 'Système reproducteur', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (12, 'Système urinaire (reins, vessie)', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (13, 'Vieillesse, mort naturelle (24 mois minimum)', NULL);
+INSERT INTO `lord`.`lord_death_causes_primary` (`death_cause_primary_id`, `death_cause_primary_name_fr`, `death_cause_primary_name_en`) VALUES (14, 'Autres', NULL);
 
 COMMIT;
 
@@ -819,6 +849,79 @@ INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `d
 INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Insuffisance cardiaque, valvulopathie', NULL, 3);
 INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Hémorragie (exagérée par rapport au contexte, anomalie de la coagulation, hémophilie)', NULL, 3);
 INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème cardiaque ou vasculaire', NULL, 3);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Abcès digestif', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Gastro-entérite, diarrhée', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Hémorragie digestive', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Insuffisance hépatique', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Malnutrition', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Mégacôlon héréditaire', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Occlusion intestinale (hors mégacôlon)', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Prolapsus rectal', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur digestive (estomac, foie, pancréas, intestins...)', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème digestif', NULL, 4);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Malformation, hydrocéphalie', NULL, 5);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Manque de lait', NULL, 5);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Mort-né', NULL, 5);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre cause de mort infantile', NULL, 5);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection / abcès musculaire', NULL, 6);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection articulaire ou osseuse, arthrite septique', NULL, 6);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur musculaire', NULL, 6);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur osseuse', NULL, 6);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème du système locomoteur', NULL, 6);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Accident vasculaire cérébral', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Atteinte progressive de la moelle épinière, paralysie dégénérative', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Epilepsie', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection du cerveau, encéphalite, méningite', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur cérébrale', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur hypophysaire (pituitaire)', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème neurologique', NULL, 7);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Abcès dentaire', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Abcès facial (hors dentaire et Zymbal)', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Abcès rétro-orbitaire', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Glaucome', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Malocclusion dentaire', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Otite, abcès dans l’oreille', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur de la glande de Zymbal', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur de la face (hors Zymbal)', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur rétro-orbitaire', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème touchant la tête', NULL, 8);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Abcès sous-cutané', NULL, 9);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection étendue de la peau (pyodermite, escarres...)', NULL, 9);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Pododermatite', NULL, 9);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur cutanée, cancer de la peau', NULL, 9);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème de peau', NULL, 9);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Bronchite, pneumonie', NULL, 10);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Œdème pulmonaire', NULL, 10);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur pulmonaire, métastases pulmonaires', NULL, 10);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème respiratoire', NULL, 10);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Complications de gestation ou de mise-bas', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection de l’utérus (métrite, pyomètre)', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Prolapsus vaginal (hors tumeurs et postpartum)', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur mammaire', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur ovarienne', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur utérine', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur vaginale', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur de la prostate', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur testiculaire', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur des glandes préputiales', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème du système reproducteur', NULL, 11);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection urinaire ou rénale', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Insuffisance rénale', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Obstruction de l’urètre, rétention urinaire, calculs', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur de la vessie', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur du rein', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre problème du système urinaire', NULL, 12);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Allergie, choc anaphylactique', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Cancer généralisé, leucémie, lymphome', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Diabète', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Euthanasie sans cause médicale', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Infection / abcès indéterminé', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Parasites', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Septicémie', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur autre (salivaire, splénique, surrénale, thyroïde...)', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Tumeur indéterminée (organe atteint inconnu)', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Virus, épidémie, déficience immunitaire (SDA, Sendaï, Tyzzer...)', NULL, 14);
+INSERT INTO `lord`.`lord_death_causes_secondary` (`death_cause_secondary_id`, `death_cause_secondary_name_fr`, `death_cause_secondary_name_en`, `deces_principal_id`) VALUES (DEFAULT, 'Autre cause connue ne rentrant dans aucune catégorie', NULL, 14);
 
 COMMIT;
 
@@ -838,17 +941,18 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lord`;
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (29036, 'Pillywiggin', 'Barbabulle', 'F', 'KTY29036F', '2012-01-07', '2014-04-24', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 12, 4, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34232, 'Nemo', '', 'M', 'INC34232M', '2012-11-15', '2014-10-30', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34231, 'Liloux', 'Liloute', 'F', 'IND34231F', '2012-05-15', '2014-11-02', 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34308, 'Fizz', 'Scratch', 'F', 'MMX34308F', '2013-02-10', '2015-01-07', 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 9, 9, 34231, 34232, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31523, 'Oshu\'Gun', NULL, 'M', 'TPX31523M', '2012-07-28', '2014-07-14', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29036, 23407, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37802, 'Tanannan', NULL, 'M', 'WEE37802M', '2013-11-22', '2016-01-23', 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37801, 'Manannan Mac Jean-Rat', 'Toutatis', 'M', 'WEE37801M', '2013-11-22', '2015-08-09', 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37806, 'Tuulikki', 'Aífé', 'F', 'WEE37806F', '2013-11-22', '2015-07-22', 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (23407, 'Nagual', 'Canis Mucilagus', 'M', 'KMR23407M', '2010-12-21', '2012-10-05', 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 11, 10, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31543, 'Woodewood Chuckchuck', NULL, 'M', 'TPX31543M', '2012-07-28', '2014-01-18', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29036, 23407, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL);
-INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31549, 'Piccadilly', NULL, 'F', 'TPX31549F', '2012-07-28', NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29306, 23407, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (29036, 'Pillywiggin', 'Barbabulle', 'F', 'KTY29036F', '2012-01-07', '2014-04-24', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 12, 4, NULL, NULL, NULL, 11, 1, 2, 1, NULL, 4, 2, '4', 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34232, 'Nemo', '', 'M', 'INC34232M', '2012-11-15', '2014-10-30', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL, NULL, 8, 19, 2, 1, NULL, 2, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34231, 'Liloux', 'Liloute', 'F', 'IND34231F', '2012-05-15', '2014-11-02', 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, NULL, NULL, NULL, NULL, 8, 17, 2, 1, NULL, 1, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (34308, 'Fizz', 'Scratch', 'F', 'MMX34308F', '2013-02-10', '2015-01-07', 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 9, 9, 34231, 34232, NULL, 7, 19, 2, 1, NULL, 2, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31523, 'Oshu\'Gun', NULL, 'M', 'TPX31523M', '2012-07-28', '2014-07-14', 7, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29036, 23407, NULL, 6, 1, 2, 1, NULL, 3, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37802, 'Tanannan', NULL, 'M', 'WEE37802M', '2013-11-22', '2016-01-23', 4, NULL, 1, 1, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, 19, 2, 1, NULL, 3, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37801, 'Manannan Mac Jean-Rat', 'Toutatis', 'M', 'WEE37801M', '2013-11-22', '2015-08-09', 1, 2, 1, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, 19, 2, 1, NULL, 3, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (37806, 'Tuulikki', 'Aífé', 'F', 'WEE37806F', '2013-11-22', '2015-07-22', 12, 74, NULL, NULL, NULL, NULL, NULL, NULL, 1, 8, 7, 34308, 31523, 1, 6, 86, 2, 2, 13, 2, NULL, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (23407, 'Nagual', 'Canis Mucilagus', 'M', 'KMR23407M', '2010-12-21', '2012-10-05', 2, 3, NULL, NULL, NULL, NULL, NULL, NULL, 1, 11, 10, NULL, NULL, NULL, 9, 64, 2, 4, 13, 2, 1, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31543, 'Woodewood Chuckchuck', NULL, 'M', 'TPX31543M', '2012-07-28', '2014-01-18', 7, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29036, 23407, NULL, 5, 1, 2, 1, NULL, 3, 2, '4', 5, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (31549, 'Piccadilly', NULL, 'F', 'TPX31549F', '2012-07-28', NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 10, 10, 29306, 23407, NULL, 6, 1, 2, 1, NULL, 3, 4, '1;4', 6, NULL, NULL);
+INSERT INTO `lord`.`lord_rats` (`rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `litter_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (44255, 'Evinrude', 'Niniane', 'F', 'KMR44255F', '2015-06-23', '2017-02-06', 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 11, 7, NULL, 37802, NULL, 12, 1, 2, 1, NULL, 2, 2, NULL, 6, NULL, NULL);
 
 COMMIT;
 
@@ -863,6 +967,30 @@ INSERT INTO `lord`.`lord_singularities` (`singularity_id`, `singularity_name_fr`
 INSERT INTO `lord`.`lord_singularities` (`singularity_id`, `singularity_name_fr`, `singularity_name_en`, `singularity_picture`) VALUES (DEFAULT, 'Down under', NULL, NULL);
 INSERT INTO `lord`.`lord_singularities` (`singularity_id`, `singularity_name_fr`, `singularity_name_en`, `singularity_picture`) VALUES (DEFAULT, 'Gants', NULL, NULL);
 INSERT INTO `lord`.`lord_singularities` (`singularity_id`, `singularity_name_fr`, `singularity_name_en`, `singularity_picture`) VALUES (DEFAULT, 'Dwarf', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `lord`.`lord_backoffice_rat_entries`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lord`;
+INSERT INTO `lord`.`lord_backoffice_rat_entries` (`lord_backoffice_rat_entry_id`, `lord_backoffice_rat_entry_status`, `rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (DEFAULT, 0, 44255, 'Evinrude', 'Niniane', 'F', 'KMR44255F', '2015-06-23', '2017-02-06', 1, 2, NULL, NULL, NULL, NULL, NULL, 'Ajout d\'un commentaire sur le rat ', NULL, 11, 7, NULL, 37802, 12, 1, 2, 1, NULL, 2, 2, NULL, 6, NULL, NULL);
+INSERT INTO `lord`.`lord_backoffice_rat_entries` (`lord_backoffice_rat_entry_id`, `lord_backoffice_rat_entry_status`, `rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (DEFAULT, 0, NULL, 'Rat Create Test', NULL, 'M', NULL, '2018-09-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Test d\'une soumission de création de rat', NULL, 11, 7, NULL, 37802, 6, 1, 2, 1, NULL, 2, 2, NULL, 6, '2018-09-15', NULL);
+INSERT INTO `lord`.`lord_backoffice_rat_entries` (`lord_backoffice_rat_entry_id`, `lord_backoffice_rat_entry_status`, `rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (DEFAULT, 1, 31549, 'Piccadilly', 'Bébé raton', 'F', 'TPX31549F', '2012-07-28', '2015-11-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10, 10, 29306, 23407, 6, 1, 2, 1, NULL, 3, 4, '1;4', 6, NULL, '2018-09-15');
+INSERT INTO `lord`.`lord_backoffice_rat_entries` (`lord_backoffice_rat_entry_id`, `lord_backoffice_rat_entry_status`, `rat_id`, `rat_name_owner`, `rat_name_pup`, `rat_sex`, `rat_pedigree_identifier`, `rat_date_birth`, `rat_date_death`, `death_cause_primary_id`, `death_cause_secondary_id`, `rat_death_euthanized`, `rat_death_diagnosed`, `rat_death_necropsied`, `rat_picture`, `rat_picture_thumbnail`, `rat_comments`, `rat_validated`, `rattery_mother_id`, `rattery_father_id`, `rat_mother_id`, `rat_father_id`, `user_owner_id`, `color_id`, `earset_id`, `eyecolor_id`, `dilution_id`, `coat_id`, `marking_id`, `singularity_id_list`, `user_creator_id`, `rat_date_create`, `rat_date_last_update`) VALUES (DEFAULT, 2, NULL, 'Be-Bop-a-Lula', 'Sianna', 'F', NULL, '2015-06-23', '2018-02-10', 10, 59, 1, NULL, NULL, NULL, NULL, NULL, NULL, 11, 7, NULL, 37802, 6, 1, 2, 1, NULL, 2, 2, NULL, 6, '2018-09-15', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `lord`.`lord_backoffice_rat_messages`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lord`;
+INSERT INTO `lord`.`lord_backoffice_rat_messages` (`backoffice_rat_message_id`, `backoffice_rat_entry_id`, `user_staff_id`, `backoffice_rat_message_staff_comments`, `backoffice_rat_message_owner_comments`, `backoffice_rat_message_date_staff_comments`, `backoffice_rat_message_date_owner_comments`) VALUES (DEFAULT, 3, 5, 'Merci de préciser la cause de décès', NULL, '2018-09-15', NULL);
+INSERT INTO `lord`.`lord_backoffice_rat_messages` (`backoffice_rat_message_id`, `backoffice_rat_entry_id`, `user_staff_id`, `backoffice_rat_message_staff_comments`, `backoffice_rat_message_owner_comments`, `backoffice_rat_message_date_staff_comments`, `backoffice_rat_message_date_owner_comments`) VALUES (DEFAULT, 4, 5, 'Merci de préciser la cause de décès', 'Je l\'avais oubliée, pardon c\'est corrigé', '2018-09-15', '2018-09-15');
 
 COMMIT;
 
