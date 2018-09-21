@@ -17,9 +17,6 @@
     "doctrine/common": {
         "version": "v2.9.0"
     },
-    "doctrine/data-fixtures": {
-        "version": "v1.3.1"
-    },
     "doctrine/dbal": {
         "version": "v2.8.0"
     },
@@ -34,15 +31,6 @@
     },
     "doctrine/doctrine-cache-bundle": {
         "version": "1.3.3"
-    },
-    "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.0",
-            "ref": "2ea6070ecf365f9a801ccaed4b31d4a3b7af5693"
-        }
     },
     "doctrine/doctrine-migrations-bundle": {
         "version": "1.2",
@@ -89,6 +77,9 @@
     "egulias/email-validator": {
         "version": "2.1.5"
     },
+    "facebook/webdriver": {
+        "version": "1.6.0"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -108,7 +99,7 @@
         }
     },
     "nikic/php-parser": {
-        "version": "v4.0.4"
+        "version": "v4.0.3"
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
@@ -230,7 +221,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "1717e67afa995e4f01a25ba9ae7aca5b2327bcaa"
+            "ref": "87c585d24de9f43bca80ebcfd5cf5cb39445d95f"
         }
     },
     "symfony/http-foundation": {
@@ -271,6 +262,9 @@
     },
     "symfony/orm-pack": {
         "version": "v1.0.5"
+    },
+    "symfony/panther": {
+        "version": "v0.1.0"
     },
     "symfony/phpunit-bridge": {
         "version": "4.1",

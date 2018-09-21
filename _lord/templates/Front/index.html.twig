@@ -5,5 +5,7 @@
 {% block body %}
     <h1>Bienvenue sur le front</h1>
 
-    <a href="{{ path('admin') }}">Admin</a>
+    <a href="{{ path('admin') }}">Admin (intégré à symfony)</a>
+
+    <a href="http://localhost:8080">Admin extérieur, interrogeant une API</a>
 {% endblock %}

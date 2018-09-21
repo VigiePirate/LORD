@@ -1,5 +1,0 @@
-
-RewriteEngine on
-RewriteRule ^([a-z]+)/([a-z]+)/([a-z]+)/?(.*)$ /index.php?module=$1&method=$2&section=$3 [L,QSA]
-RewriteRule ^([a-z]+)/([a-z]+)/?(.*)$ /index.php?module=$1&method=$2 [L,QSA]
-
