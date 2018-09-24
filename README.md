@@ -2,6 +2,7 @@
 
 Livre des Origines du Rat Domestique Version 2
 
+<<<<<<< HEAD
 ## Vue générale
 
 Tout le code est situé dans un seul dossier lord, qui correspond à l'application symfony.
@@ -164,3 +165,6 @@ Pour un client JS :
     cd admin
     npm install
     npm start
+=======
+Démo app symfony "tout en un" : l'admin et le front font partie de la même application, un seul langage, pas besoin de développer d'api, et on peut si nécessaire exposer les données via une api sans développement supplémentaire (annotation ApiResource via api-platform) : https://github.com/symfony/demo
+>>>>>>> d2646c0672718ee08467737c222f28cc818ef4b1
