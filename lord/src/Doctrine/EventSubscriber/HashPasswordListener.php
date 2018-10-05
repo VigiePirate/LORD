@@ -48,13 +48,13 @@ class HashPasswordListener implements EventSubscriber
 
     private function encodePassword(User $entity)
     {
-        if (!$entity->getPassword() || $entity->getPassword() === '') {
+        if (!$entity->getPlainPassword() || $entity->getPlainPassword() === '') {
             return;
         }
 
         $encoded = $this->_passwordEncoder->encodePassword(
             $entity,
-            $entity->getPassword()
+            $entity->getPlainPassword()
         );
         $entity->setPassword($encoded);
     }

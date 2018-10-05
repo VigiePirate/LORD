@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements UserInterface, \Serializable
 {
@@ -20,8 +24,15 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -30,8 +41,9 @@ class User implements UserInterface, \Serializable
 
     /**
      * On limite à 190 caractères pour éviter une erreur sur MySQL 5.6
-     * on p
      * @ORM\Column(type="string", length=190, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -47,12 +59,11 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
+        $this->isActive = false;
+        $this->roles = array('ROLE_USER');
     }
 
-    public function getUsername() : string
+    public function getUsername() : ? string
     {
         return $this->username;
     }
@@ -63,7 +74,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getEmail() : string
+    public function getEmail() : ? string
     {
         return $this->email;
     }
@@ -78,6 +89,18 @@ class User implements UserInterface, \Serializable
         // you *may* need a real salt depending on your encoder
         // see section on salt below
         return null;
+    }
+
+    public function getPlainPassword() : ? string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password) : self
+    {
+        $this->plainPassword = $password;
+
+        return $this;
     }
 
     public function getPassword() : string

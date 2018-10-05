@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'Front/index.html.twig' %}
 
 {% block body %}
 {% if error %}
@@ -23,6 +23,6 @@
     <input type="checkbox" id="remember_me" name="_remember_me" checked />
     <label for="remember_me">Se souvenir de moi</label>
 
-    <button type="submit">login</button>
+    <button type="submit" class="btn btn-primary">login</button>
 </form>
 {% endblock %}

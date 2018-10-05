@@ -4,9 +4,10 @@
  * We recommend including the built version of this JavaScript file
  * (and its CSS file) in your base layout (base.html.twig).
  */
+// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
+import $ from "jquery";
+import boostrap from "bootstrap";
+import sbadmin from "startbootstrap-sb-admin";
 
 // any CSS you require will output into a single css file (app.css in this case)
 import * as css from "../scss/app.scss";
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-import $ from "jquery";
