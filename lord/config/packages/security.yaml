@@ -3,19 +3,31 @@ security:
     encoders:
         App\Entity\User:
             algorithm: bcrypt
+
+    role_hierarchy:
+        # Un admin hérite des droits d'utilisateur
+        ROLE_ADMIN:       [ROLE_USER]
+
+        # On garde ce rôle superadmin, il nous resservira par la suite
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+
     providers:
         user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+            entity: { class: App\Entity\User, property: email }
                 # if you're using multiple entity managers
 # manager_name: customer
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+        admin:
+            pattern: ^/admin
             anonymous: true
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /admin
 
             # activate different ways to authenticate
 
@@ -25,13 +37,45 @@ security:
             form_login:
                 login_path: admin_login
                 check_path: admin_login
-                username_path: email
-                password_path: password
+                username_parameter: email
+                password_parameter: password
             # https://symfony.com/doc/current/security/form_login_setup.html
+            # https://symfony.com/doc/current/reference/configuration/security.html#reference-security-firewall-form-login
+            logout:
+                path: admin_logout
+                target: admin_login
+                invalidate_session: false
+
+        front:
+            pattern: ^/
+            anonymous: true
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            form_login:
+                login_path: login
+                check_path: login
+                username_parameter: email
+                password_parameter: password
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            # https://symfony.com/doc/current/reference/configuration/security.html#reference-security-firewall-form-login
+            logout:
+                path: logout
+                target: login
+                invalidate_session: false
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }

@@ -115,3 +115,7 @@ Pour info, dans le webpack.config.js :
 - Fixtures : en cours de rédaction
 
 Toute la doc qui fait référence à doctrine se trouve [ici](https://symfony.com/doc/current/doctrine.html)
+
+@TODO:
+
+- la déconnexion d'un pare-feu ne doit pas impacter la connexion à un deuxième pare-feu

@@ -29,7 +29,8 @@ class AppFixtures extends Fixture
             $userEntity
                 ->setUsername($user['username'])
                 ->setEmail($user['email'])
-                ->setPassword($user['password']);
+                ->setPassword($user['password'])
+                ->setRoles($user['roles']);
 
             $manager->persist($userEntity);
         }

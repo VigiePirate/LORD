@@ -8,6 +8,13 @@ class Data
             'username' => 'admin',
             'email' => 'admin@lord.fr',
             'password' => '0000',
+            'roles' => ['ROLE_ADMIN']
+        ],
+        [
+            'username' => 'user',
+            'email' => 'user@lord.fr',
+            'password' => '0000',
+            'roles' => ['ROLE_USER']
         ]
     ];
 }
