@@ -62,12 +62,7 @@ IF NOT EXISTS lord.lord_users
 (1) NULL,
   user_date_creation DATE NULL,
   user_date_last_update DATE NULL,
-  roles LONGTEXT NOT NULL DEFAULT 'a:
-1:{
-i:
-0;
-s:
-9:"ROLE_USER";}',
+  roles LONGTEXT NULL,
   user_is_locked TINYINT
 (1) NULL,
   user_failed_login_attempts TINYINT NULL,
@@ -917,7 +912,7 @@ lord.lord_users
 
   (user_id, user_email, user_password, user_sex, user_name_first, user_name_last, user_login, user_date_birth, user_newsletter, user_date_creation, user_date_last_update, roles, user_is_locked, user_failed_login_attempts)
 VALUES
-  (DEFAULT, 'laurielegeret@free.fr', NULL, 'F', 'Laurie ', 'Legeret', 'louli', NULL, NULL, NULL, NULL, DEFAULT, NULL, NULL);
+  (DEFAULT, 'laurielegeret@free.fr', NULL, 'F', 'Laurie ', 'Legeret', 'louli', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
