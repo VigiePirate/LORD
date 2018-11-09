@@ -220,6 +220,18 @@ class LordUser implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->isActive,
+            $this->gender,
+            $this->firstName,
+            $this->lastName,
+            $this->userDateBirth,
+            $this->userNewsletter,
+            $this->userDateCreation,
+            $this->userDateLastUpdate,
+            $this->roles,
+            $this->userIsLocked,
+            $this->userFailedLoginAttempts,
             // see section on salt below
             // $this->salt,
         ));
@@ -232,6 +244,18 @@ class LordUser implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->isActive,
+            $this->gender,
+            $this->firstName,
+            $this->lastName,
+            $this->userDateBirth,
+            $this->userNewsletter,
+            $this->userDateCreation,
+            $this->userDateLastUpdate,
+            $this->roles,
+            $this->userIsLocked,
+            $this->userFailedLoginAttempts,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized, array('allowed_classes' => false));
