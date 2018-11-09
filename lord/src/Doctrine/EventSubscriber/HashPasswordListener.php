@@ -3,7 +3,7 @@
 namespace App\Doctrine\EventSubscriber;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use App\Entity\User;
+use App\Entity\LordUser;
 use Doctrine\Common\EventSubscriber;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -26,7 +26,7 @@ class HashPasswordListener implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof User) {
+        if (!$entity instanceof LordUser) {
             return;
         }
 
@@ -36,7 +36,7 @@ class HashPasswordListener implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof User) {
+        if (!$entity instanceof LordUser) {
             return;
         }
         $this->encodePassword($entity);
@@ -46,7 +46,7 @@ class HashPasswordListener implements EventSubscriber
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
     }
 
-    private function encodePassword(User $entity)
+    private function encodePassword(LordUser $entity)
     {
         if (!$entity->getPlainPassword() || $entity->getPlainPassword() === '') {
             return;

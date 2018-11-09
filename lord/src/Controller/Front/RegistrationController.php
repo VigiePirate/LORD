@@ -2,8 +2,8 @@
 
 namespace App\Controller\Front;
 
-use App\Form\UserType;
-use App\Entity\User;
+use App\Form\LordUserType;
+use App\Entity\LordUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,8 +16,8 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $user = new LordUser();
+        $form = $this->createForm(LordUserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
