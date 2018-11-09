@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        App\Entity\User:
+        App\Entity\LordUser:
             algorithm: bcrypt
 
     role_hierarchy:
@@ -13,7 +13,7 @@ security:
 
     providers:
         user_provider:
-            entity: { class: App\Entity\User, property: email }
+            entity: { class: App\Entity\LordUser, property: email }
                 # if you're using multiple entity managers
 # manager_name: customer
     firewalls:

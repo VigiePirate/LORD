@@ -26,21 +26,21 @@ class LordCoat
      *
      * @ORM\Column(name="coat_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $coatNameFr = 'NULL';
+    private $coatNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="coat_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $coatNameEn = 'NULL';
+    private $coatNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="coat_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $coatPicture = 'NULL';
+    private $coatPicture;
 
     public function getCoatId() : ? int
     {

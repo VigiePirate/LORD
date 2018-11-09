@@ -59,49 +59,49 @@ class LordUser implements UserInterface, \Serializable
      *
      * @ORM\Column(name="user_sex", type="string", length=1, nullable=true, options={"default"="NULL","fixed"=true})
      */
-    private $gender = 'NULL';
+    private $gender;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="user_name_first", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $firstName = 'NULL';
+    private $firstName;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="user_name_last", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $lastName = 'NULL';
+    private $lastName;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="user_date_birth", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $userDateBirth = 'NULL';
+    private $userDateBirth;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="user_newsletter", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $userNewsletter = 'NULL';
+    private $userNewsletter;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="user_date_creation", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $userDateCreation = 'NULL';
+    private $userDateCreation;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="user_date_last_update", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $userDateLastUpdate = 'NULL';
+    private $userDateLastUpdate;
 
     /**
      * @ORM\Column(name="roles", type="array", nullable=true)
@@ -113,14 +113,14 @@ class LordUser implements UserInterface, \Serializable
      *
      * @ORM\Column(name="user_is_locked", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $userIsLocked = 'NULL';
+    private $userIsLocked;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="user_failed_login_attempts", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $userFailedLoginAttempts = 'NULL';
+    private $userFailedLoginAttempts;
 
     public function __construct()
     {

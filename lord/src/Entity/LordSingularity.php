@@ -26,21 +26,21 @@ class LordSingularity
      *
      * @ORM\Column(name="singularity_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $singularityNameFr = 'NULL';
+    private $singularityNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="singularity_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $singularityNameEn = 'NULL';
+    private $singularityNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="singularity_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $singularityPicture = 'NULL';
+    private $singularityPicture;
 
     public function getSingularityId() : ? int
     {

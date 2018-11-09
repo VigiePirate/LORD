@@ -26,124 +26,124 @@ class LordBackofficeRatEntry
      *
      * @ORM\Column(name="lord_backoffice_rat_entry_status", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $lordBackofficeRatEntryStatus = 'NULL';
+    private $lordBackofficeRatEntryStatus;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_name_owner", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $ratNameOwner = 'NULL';
+    private $ratNameOwner;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_name_pup", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $ratNamePup = 'NULL';
+    private $ratNamePup;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_sex", type="string", length=1, nullable=true, options={"default"="NULL","fixed"=true})
      */
-    private $ratSex = 'NULL';
+    private $ratSex;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_pedigree_identifier", type="string", length=10, nullable=true, options={"default"="NULL"})
      */
-    private $ratPedigreeIdentifier = 'NULL';
+    private $ratPedigreeIdentifier;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rat_date_birth", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratDateBirth = 'NULL';
+    private $ratDateBirth;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rat_date_death", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratDateDeath = 'NULL';
+    private $ratDateDeath;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rat_death_euthanized", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratDeathEuthanized = 'NULL';
+    private $ratDeathEuthanized;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rat_death_diagnosed", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratDeathDiagnosed = 'NULL';
+    private $ratDeathDiagnosed;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rat_death_necropsied", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratDeathNecropsied = 'NULL';
+    private $ratDeathNecropsied;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $ratPicture = 'NULL';
+    private $ratPicture;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_picture_thumbnail", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $ratPictureThumbnail = 'NULL';
+    private $ratPictureThumbnail;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rat_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $ratComments = 'NULL';
+    private $ratComments;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rat_validated", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratValidated = 'NULL';
+    private $ratValidated;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="singularity_id_list", type="string", length=15, nullable=true, options={"default"="NULL"})
      */
-    private $singularityIdList = 'NULL';
+    private $singularityIdList;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rat_date_create", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratDateCreate = 'NULL';
+    private $ratDateCreate;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rat_date_last_update", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratDateLastUpdate = 'NULL';
+    private $ratDateLastUpdate;
 
     /**
-     * @var \LordColors
+     * @var \LordColor
      *
-     * @ORM\ManyToOne(targetEntity="LordColors")
+     * @ORM\ManyToOne(targetEntity="LordColor")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="color_id", referencedColumnName="color_id")
      * })
@@ -161,19 +161,19 @@ class LordBackofficeRatEntry
     private $deathCausePrimary;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_creator_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_creator_id", referencedColumnName="id")
      * })
      */
     private $userCreator;
 
     /**
-     * @var \LordBackofficeRatEntries
+     * @var \LordBackofficeRatEntry
      *
-     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntries")
+     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntry")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rat_mother_id", referencedColumnName="lord_backoffice_rat_entry_id")
      * })
@@ -181,9 +181,9 @@ class LordBackofficeRatEntry
     private $ratMother;
 
     /**
-     * @var \LordEarsets
+     * @var \LordEarset
      *
-     * @ORM\ManyToOne(targetEntity="LordEarsets")
+     * @ORM\ManyToOne(targetEntity="LordEarset")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="earset_id", referencedColumnName="earset_id")
      * })
@@ -191,9 +191,9 @@ class LordBackofficeRatEntry
     private $earset;
 
     /**
-     * @var \LordRatteries
+     * @var \LordRattery
      *
-     * @ORM\ManyToOne(targetEntity="LordRatteries")
+     * @ORM\ManyToOne(targetEntity="LordRattery")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rattery_mother_id", referencedColumnName="rattery_id")
      * })
@@ -201,9 +201,9 @@ class LordBackofficeRatEntry
     private $ratteryMother;
 
     /**
-     * @var \LordBackofficeRatEntries
+     * @var \LordBackofficeRatEntry
      *
-     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntries")
+     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntry")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rat_father_id", referencedColumnName="lord_backoffice_rat_entry_id")
      * })
@@ -211,9 +211,9 @@ class LordBackofficeRatEntry
     private $ratFather;
 
     /**
-     * @var \LordEyecolors
+     * @var \LordEyecolor
      *
-     * @ORM\ManyToOne(targetEntity="LordEyecolors")
+     * @ORM\ManyToOne(targetEntity="LordEyecolor")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="eyecolor_id", referencedColumnName="eyecolor_id")
      * })
@@ -221,11 +221,11 @@ class LordBackofficeRatEntry
     private $eyecolor;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id")
      * })
      */
     private $userOwner;
@@ -241,9 +241,9 @@ class LordBackofficeRatEntry
     private $deathCauseSecondary;
 
     /**
-     * @var \LordDilutions
+     * @var \LordDilution
      *
-     * @ORM\ManyToOne(targetEntity="LordDilutions")
+     * @ORM\ManyToOne(targetEntity="LordDilution")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="dilution_id", referencedColumnName="dilution_id")
      * })
@@ -251,9 +251,9 @@ class LordBackofficeRatEntry
     private $dilution;
 
     /**
-     * @var \LordRats
+     * @var \LordRat
      *
-     * @ORM\ManyToOne(targetEntity="LordRats")
+     * @ORM\ManyToOne(targetEntity="LordRat")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rat_id", referencedColumnName="rat_id")
      * })
@@ -261,9 +261,9 @@ class LordBackofficeRatEntry
     private $rat;
 
     /**
-     * @var \LordMarkings
+     * @var \LordMarking
      *
-     * @ORM\ManyToOne(targetEntity="LordMarkings")
+     * @ORM\ManyToOne(targetEntity="LordMarking")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="marking_id", referencedColumnName="marking_id")
      * })
@@ -271,9 +271,9 @@ class LordBackofficeRatEntry
     private $marking;
 
     /**
-     * @var \LordRatteries
+     * @var \LordRattery
      *
-     * @ORM\ManyToOne(targetEntity="LordRatteries")
+     * @ORM\ManyToOne(targetEntity="LordRattery")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rattery_father_id", referencedColumnName="rattery_id")
      * })
@@ -281,9 +281,9 @@ class LordBackofficeRatEntry
     private $ratteryFather;
 
     /**
-     * @var \LordCoats
+     * @var \LordCoat
      *
-     * @ORM\ManyToOne(targetEntity="LordCoats")
+     * @ORM\ManyToOne(targetEntity="LordCoat")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="coat_id", referencedColumnName="coat_id")
      * })
@@ -499,12 +499,12 @@ class LordBackofficeRatEntry
         return $this;
     }
 
-    public function getColor() : ? LordColors
+    public function getColor() : ? LordColor
     {
         return $this->color;
     }
 
-    public function setColor(? LordColors $color) : self
+    public function setColor(? LordColor $color) : self
     {
         $this->color = $color;
 
@@ -523,12 +523,12 @@ class LordBackofficeRatEntry
         return $this;
     }
 
-    public function getUserCreator() : ? LordUsers
+    public function getUserCreator() : ? LordUser
     {
         return $this->userCreator;
     }
 
-    public function setUserCreator(? LordUsers $userCreator) : self
+    public function setUserCreator(? LordUser $userCreator) : self
     {
         $this->userCreator = $userCreator;
 
@@ -547,24 +547,24 @@ class LordBackofficeRatEntry
         return $this;
     }
 
-    public function getEarset() : ? LordEarsets
+    public function getEarset() : ? LordEarset
     {
         return $this->earset;
     }
 
-    public function setEarset(? LordEarsets $earset) : self
+    public function setEarset(? LordEarset $earset) : self
     {
         $this->earset = $earset;
 
         return $this;
     }
 
-    public function getRatteryMother() : ? LordRatteries
+    public function getRatteryMother() : ? LordRattery
     {
         return $this->ratteryMother;
     }
 
-    public function setRatteryMother(? LordRatteries $ratteryMother) : self
+    public function setRatteryMother(? LordRattery $ratteryMother) : self
     {
         $this->ratteryMother = $ratteryMother;
 
@@ -583,24 +583,24 @@ class LordBackofficeRatEntry
         return $this;
     }
 
-    public function getEyecolor() : ? LordEyecolors
+    public function getEyecolor() : ? LordEyecolor
     {
         return $this->eyecolor;
     }
 
-    public function setEyecolor(? LordEyecolors $eyecolor) : self
+    public function setEyecolor(? LordEyecolor $eyecolor) : self
     {
         $this->eyecolor = $eyecolor;
 
         return $this;
     }
 
-    public function getUserOwner() : ? LordUsers
+    public function getUserOwner() : ? LordUser
     {
         return $this->userOwner;
     }
 
-    public function setUserOwner(? LordUsers $userOwner) : self
+    public function setUserOwner(? LordUser $userOwner) : self
     {
         $this->userOwner = $userOwner;
 
@@ -619,60 +619,60 @@ class LordBackofficeRatEntry
         return $this;
     }
 
-    public function getDilution() : ? LordDilutions
+    public function getDilution() : ? LordDilution
     {
         return $this->dilution;
     }
 
-    public function setDilution(? LordDilutions $dilution) : self
+    public function setDilution(? LordDilution $dilution) : self
     {
         $this->dilution = $dilution;
 
         return $this;
     }
 
-    public function getRat() : ? LordRats
+    public function getRat() : ? LordRat
     {
         return $this->rat;
     }
 
-    public function setRat(? LordRats $rat) : self
+    public function setRat(? LordRat $rat) : self
     {
         $this->rat = $rat;
 
         return $this;
     }
 
-    public function getMarking() : ? LordMarkings
+    public function getMarking() : ? LordMarking
     {
         return $this->marking;
     }
 
-    public function setMarking(? LordMarkings $marking) : self
+    public function setMarking(? LordMarking $marking) : self
     {
         $this->marking = $marking;
 
         return $this;
     }
 
-    public function getRatteryFather() : ? LordRatteries
+    public function getRatteryFather() : ? LordRattery
     {
         return $this->ratteryFather;
     }
 
-    public function setRatteryFather(? LordRatteries $ratteryFather) : self
+    public function setRatteryFather(? LordRattery $ratteryFather) : self
     {
         $this->ratteryFather = $ratteryFather;
 
         return $this;
     }
 
-    public function getCoat() : ? LordCoats
+    public function getCoat() : ? LordCoat
     {
         return $this->coat;
     }
 
-    public function setCoat(? LordCoats $coat) : self
+    public function setCoat(? LordCoat $coat) : self
     {
         $this->coat = $coat;
 

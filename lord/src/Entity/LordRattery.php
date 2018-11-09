@@ -26,70 +26,70 @@ class LordRattery
      *
      * @ORM\Column(name="rattery_name", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $ratteryName = 'NULL';
+    private $ratteryName;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="raterie_prefix", type="string", length=3, nullable=true, options={"default"="NULL"})
      */
-    private $rateriePrefix = 'NULL';
+    private $rateriePrefix;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rattery_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $ratteryComments = 'NULL';
+    private $ratteryComments;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="rattery_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $ratteryPicture = 'NULL';
+    private $ratteryPicture;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rattery_status", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratteryStatus = 'NULL';
+    private $ratteryStatus;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="rattery_validated", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $ratteryValidated = 'NULL';
+    private $ratteryValidated;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rattery_date_birth", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratteryDateBirth = 'NULL';
+    private $ratteryDateBirth;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rattery_date_creation", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratteryDateCreation = 'NULL';
+    private $ratteryDateCreation;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="rattery_date_last_update", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $ratteryDateLastUpdate = 'NULL';
+    private $ratteryDateLastUpdate;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id")
      * })
      */
     private $userOwner;
@@ -207,12 +207,12 @@ class LordRattery
         return $this;
     }
 
-    public function getUserOwner() : ? LordUsers
+    public function getUserOwner() : ? LordUser
     {
         return $this->userOwner;
     }
 
-    public function setUserOwner(? LordUsers $userOwner) : self
+    public function setUserOwner(? LordUser $userOwner) : self
     {
         $this->userOwner = $userOwner;
 

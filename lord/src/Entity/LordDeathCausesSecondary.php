@@ -26,14 +26,14 @@ class LordDeathCausesSecondary
      *
      * @ORM\Column(name="death_cause_secondary_name_fr", type="string", length=100, nullable=true, options={"default"="NULL"})
      */
-    private $deathCauseSecondaryNameFr = 'NULL';
+    private $deathCauseSecondaryNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="death_cause_secondary_name_en", type="string", length=100, nullable=true, options={"default"="NULL"})
      */
-    private $deathCauseSecondaryNameEn = 'NULL';
+    private $deathCauseSecondaryNameEn;
 
     /**
      * @var \LordDeathCausesPrimary
@@ -45,41 +45,41 @@ class LordDeathCausesSecondary
      */
     private $decesPrincipal;
 
-    public function getDeathCauseSecondaryId(): ?int
+    public function getDeathCauseSecondaryId() : ? int
     {
         return $this->deathCauseSecondaryId;
     }
 
-    public function getDeathCauseSecondaryNameFr(): ?string
+    public function getDeathCauseSecondaryNameFr() : ? string
     {
         return $this->deathCauseSecondaryNameFr;
     }
 
-    public function setDeathCauseSecondaryNameFr(?string $deathCauseSecondaryNameFr): self
+    public function setDeathCauseSecondaryNameFr(? string $deathCauseSecondaryNameFr) : self
     {
         $this->deathCauseSecondaryNameFr = $deathCauseSecondaryNameFr;
 
         return $this;
     }
 
-    public function getDeathCauseSecondaryNameEn(): ?string
+    public function getDeathCauseSecondaryNameEn() : ? string
     {
         return $this->deathCauseSecondaryNameEn;
     }
 
-    public function setDeathCauseSecondaryNameEn(?string $deathCauseSecondaryNameEn): self
+    public function setDeathCauseSecondaryNameEn(? string $deathCauseSecondaryNameEn) : self
     {
         $this->deathCauseSecondaryNameEn = $deathCauseSecondaryNameEn;
 
         return $this;
     }
 
-    public function getDecesPrincipal(): ?LordDeathCausesPrimary
+    public function getDecesPrincipal() : ? LordDeathCausesPrimary
     {
         return $this->decesPrincipal;
     }
 
-    public function setDecesPrincipal(?LordDeathCausesPrimary $decesPrincipal): self
+    public function setDecesPrincipal(? LordDeathCausesPrimary $decesPrincipal) : self
     {
         $this->decesPrincipal = $decesPrincipal;
 

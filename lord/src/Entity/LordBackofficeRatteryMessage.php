@@ -26,33 +26,33 @@ class LordBackofficeRatteryMessage
      *
      * @ORM\Column(name="backoffice_rattery_message_staff_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatteryMessageStaffComments = 'NULL';
+    private $backofficeRatteryMessageStaffComments;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="backoffice_rattery_message_owner_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatteryMessageOwnerComments = 'NULL';
+    private $backofficeRatteryMessageOwnerComments;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="backoffice_rattery_messages_date_staff_comments", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatteryMessagesDateStaffComments = 'NULL';
+    private $backofficeRatteryMessagesDateStaffComments;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="backoffice_rattery_messages_date_owner_comments", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatteryMessagesDateOwnerComments = 'NULL';
+    private $backofficeRatteryMessagesDateOwnerComments;
 
     /**
-     * @var \LordRatteries
+     * @var \LordRattery
      *
-     * @ORM\ManyToOne(targetEntity="LordRatteries")
+     * @ORM\ManyToOne(targetEntity="LordRattery")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rattery_id", referencedColumnName="rattery_id")
      * })
@@ -60,11 +60,11 @@ class LordBackofficeRatteryMessage
     private $rattery;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_staff_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_staff_id", referencedColumnName="id")
      * })
      */
     private $userStaff;
@@ -122,24 +122,24 @@ class LordBackofficeRatteryMessage
         return $this;
     }
 
-    public function getRattery() : ? LordRatteries
+    public function getRattery() : ? LordRattery
     {
         return $this->rattery;
     }
 
-    public function setRattery(? LordRatteries $rattery) : self
+    public function setRattery(? LordRattery $rattery) : self
     {
         $this->rattery = $rattery;
 
         return $this;
     }
 
-    public function getUserStaff() : ? LordUsers
+    public function getUserStaff() : ? LordUser
     {
         return $this->userStaff;
     }
 
-    public function setUserStaff(? LordUsers $userStaff) : self
+    public function setUserStaff(? LordUser $userStaff) : self
     {
         $this->userStaff = $userStaff;
 

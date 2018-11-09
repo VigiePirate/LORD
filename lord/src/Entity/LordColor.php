@@ -26,33 +26,33 @@ class LordColor
      *
      * @ORM\Column(name="color_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $colorNameFr = 'NULL';
+    private $colorNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="color_genotype", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $colorGenotype = 'NULL';
+    private $colorGenotype;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="color_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $colorNameEn = 'NULL';
+    private $colorNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="color_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $colorPicture = 'NULL';
+    private $colorPicture;
 
     /**
-     * @var \LordEyecolors
+     * @var \LordEyecolor
      *
-     * @ORM\ManyToOne(targetEntity="LordEyecolors")
+     * @ORM\ManyToOne(targetEntity="LordEyecolor")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="eyecolor_id", referencedColumnName="eyecolor_id")
      * })
@@ -112,12 +112,12 @@ class LordColor
         return $this;
     }
 
-    public function getEyecolor() : ? LordEyecolors
+    public function getEyecolor() : ? LordEyecolor
     {
         return $this->eyecolor;
     }
 
-    public function setEyecolor(? LordEyecolors $eyecolor) : self
+    public function setEyecolor(? LordEyecolor $eyecolor) : self
     {
         $this->eyecolor = $eyecolor;
 

@@ -26,21 +26,21 @@ class LordEarset
      *
      * @ORM\Column(name="earset_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $earsetNameFr = 'NULL';
+    private $earsetNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="earset_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $earsetNameEn = 'NULL';
+    private $earsetNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="earset_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $earsetPicture = 'NULL';
+    private $earsetPicture;
 
     public function getEarsetId() : ? int
     {

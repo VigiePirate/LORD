@@ -26,21 +26,21 @@ class LordDilution
      *
      * @ORM\Column(name="dilution_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $dilutionNameFr = 'NULL';
+    private $dilutionNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="dilution_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $dilutionNameEn = 'NULL';
+    private $dilutionNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="dilution_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $dilutionPicture = 'NULL';
+    private $dilutionPicture;
 
     public function getDilutionId() : ? int
     {

@@ -26,38 +26,38 @@ class LordDeathCausesPrimary
      *
      * @ORM\Column(name="death_cause_primary_name_fr", type="string", length=100, nullable=true, options={"default"="NULL"})
      */
-    private $deathCausePrimaryNameFr = 'NULL';
+    private $deathCausePrimaryNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="death_cause_primary_name_en", type="string", length=100, nullable=true, options={"default"="NULL"})
      */
-    private $deathCausePrimaryNameEn = 'NULL';
+    private $deathCausePrimaryNameEn;
 
-    public function getDeathCausePrimaryId(): ?int
+    public function getDeathCausePrimaryId() : ? int
     {
         return $this->deathCausePrimaryId;
     }
 
-    public function getDeathCausePrimaryNameFr(): ?string
+    public function getDeathCausePrimaryNameFr() : ? string
     {
         return $this->deathCausePrimaryNameFr;
     }
 
-    public function setDeathCausePrimaryNameFr(?string $deathCausePrimaryNameFr): self
+    public function setDeathCausePrimaryNameFr(? string $deathCausePrimaryNameFr) : self
     {
         $this->deathCausePrimaryNameFr = $deathCausePrimaryNameFr;
 
         return $this;
     }
 
-    public function getDeathCausePrimaryNameEn(): ?string
+    public function getDeathCausePrimaryNameEn() : ? string
     {
         return $this->deathCausePrimaryNameEn;
     }
 
-    public function setDeathCausePrimaryNameEn(?string $deathCausePrimaryNameEn): self
+    public function setDeathCausePrimaryNameEn(? string $deathCausePrimaryNameEn) : self
     {
         $this->deathCausePrimaryNameEn = $deathCausePrimaryNameEn;
 

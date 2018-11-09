@@ -26,21 +26,21 @@ class LordEyecolor
      *
      * @ORM\Column(name="eyecolor_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $eyecolorNameFr = 'NULL';
+    private $eyecolorNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="eyecolor_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $eyecolorNameEn = 'NULL';
+    private $eyecolorNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="eyecolor_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $eyecolorPicture = 'NULL';
+    private $eyecolorPicture;
 
     public function getEyecolorId() : ? int
     {

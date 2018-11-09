@@ -26,40 +26,40 @@ class LordLitter
      *
      * @ORM\Column(name="litter_date_mating", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $litterDateMating = 'NULL';
+    private $litterDateMating;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="litter_date_birth", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $litterDateBirth = 'NULL';
+    private $litterDateBirth;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="litter_number_pups", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $litterNumberPups = 'NULL';
+    private $litterNumberPups;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="litter_number_pups_stillborn", type="boolean", nullable=true, options={"default"="NULL"})
      */
-    private $litterNumberPupsStillborn = 'NULL';
+    private $litterNumberPupsStillborn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="litter_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $litterComments = 'NULL';
+    private $litterComments;
 
     /**
-     * @var \LordRats
+     * @var \LordRat
      *
-     * @ORM\ManyToOne(targetEntity="LordRats")
+     * @ORM\ManyToOne(targetEntity="LordRat")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rat_mother_id", referencedColumnName="rat_id")
      * })
@@ -67,9 +67,9 @@ class LordLitter
     private $ratMother;
 
     /**
-     * @var \LordRats
+     * @var \LordRat
      *
-     * @ORM\ManyToOne(targetEntity="LordRats")
+     * @ORM\ManyToOne(targetEntity="LordRat")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="rat_father_id", referencedColumnName="rat_id")
      * })
@@ -77,11 +77,11 @@ class LordLitter
     private $ratFather;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_owner_id", referencedColumnName="id")
      * })
      */
     private $userOwner;
@@ -151,36 +151,36 @@ class LordLitter
         return $this;
     }
 
-    public function getRatMother() : ? LordRats
+    public function getRatMother() : ? LordRat
     {
         return $this->ratMother;
     }
 
-    public function setRatMother(? LordRats $ratMother) : self
+    public function setRatMother(? LordRat $ratMother) : self
     {
         $this->ratMother = $ratMother;
 
         return $this;
     }
 
-    public function getRatFather() : ? LordRats
+    public function getRatFather() : ? LordRat
     {
         return $this->ratFather;
     }
 
-    public function setRatFather(? LordRats $ratFather) : self
+    public function setRatFather(? LordRat $ratFather) : self
     {
         $this->ratFather = $ratFather;
 
         return $this;
     }
 
-    public function getUserOwner() : ? LordUsers
+    public function getUserOwner() : ? LordUser
     {
         return $this->userOwner;
     }
 
-    public function setUserOwner(? LordUsers $userOwner) : self
+    public function setUserOwner(? LordUser $userOwner) : self
     {
         $this->userOwner = $userOwner;
 

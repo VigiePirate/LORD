@@ -26,33 +26,33 @@ class LordBackofficeRatMessage
      *
      * @ORM\Column(name="backoffice_rat_message_staff_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatMessageStaffComments = 'NULL';
+    private $backofficeRatMessageStaffComments;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="backoffice_rat_message_owner_comments", type="text", length=65535, nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatMessageOwnerComments = 'NULL';
+    private $backofficeRatMessageOwnerComments;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="backoffice_rat_message_date_staff_comments", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatMessageDateStaffComments = 'NULL';
+    private $backofficeRatMessageDateStaffComments;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="backoffice_rat_message_date_owner_comments", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $backofficeRatMessageDateOwnerComments = 'NULL';
+    private $backofficeRatMessageDateOwnerComments;
 
     /**
-     * @var \LordBackofficeRatEntries
+     * @var \LordBackofficeRatEntry
      *
-     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntries")
+     * @ORM\ManyToOne(targetEntity="LordBackofficeRatEntry")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="backoffice_rat_entry_id", referencedColumnName="lord_backoffice_rat_entry_id")
      * })
@@ -60,11 +60,11 @@ class LordBackofficeRatMessage
     private $backofficeRatEntry;
 
     /**
-     * @var \LordUsers
+     * @var \LordUser
      *
-     * @ORM\ManyToOne(targetEntity="LordUsers")
+     * @ORM\ManyToOne(targetEntity="LordUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_staff_id", referencedColumnName="user_id")
+     *   @ORM\JoinColumn(name="user_staff_id", referencedColumnName="id")
      * })
      */
     private $userStaff;
@@ -122,24 +122,24 @@ class LordBackofficeRatMessage
         return $this;
     }
 
-    public function getBackofficeRatEntry() : ? LordBackofficeRatEntries
+    public function getBackofficeRatEntry() : ? LordBackofficeRatEntry
     {
         return $this->backofficeRatEntry;
     }
 
-    public function setBackofficeRatEntry(? LordBackofficeRatEntries $backofficeRatEntry) : self
+    public function setBackofficeRatEntry(? LordBackofficeRatEntry $backofficeRatEntry) : self
     {
         $this->backofficeRatEntry = $backofficeRatEntry;
 
         return $this;
     }
 
-    public function getUserStaff() : ? LordUsers
+    public function getUserStaff() : ? LordUser
     {
         return $this->userStaff;
     }
 
-    public function setUserStaff(? LordUsers $userStaff) : self
+    public function setUserStaff(? LordUser $userStaff) : self
     {
         $this->userStaff = $userStaff;
 

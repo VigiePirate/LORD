@@ -26,21 +26,21 @@ class LordMarking
      *
      * @ORM\Column(name="marking_name_fr", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $markingNameFr = 'NULL';
+    private $markingNameFr;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="marking_name_en", type="string", length=70, nullable=true, options={"default"="NULL"})
      */
-    private $markingNameEn = 'NULL';
+    private $markingNameEn;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="marking_picture", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $markingPicture = 'NULL';
+    private $markingPicture;
 
     public function getMarkingId() : ? int
     {
