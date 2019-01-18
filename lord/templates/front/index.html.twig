@@ -7,8 +7,12 @@
 
     <a href="{{ path('admin') }}">Admin</a>
 
-    <a href="{{ path('login') }}">login</a>
-    <a href="{{ path('logout') }}">logout</a>
+    <a href="{{ path('security_login') }}">login</a>
+    <a href="{{ path('security_logout') }}">logout</a>
 
     <a href="{{ path('user_registration') }}">Créer un compte</a>
+
+    {% if (app.user) %}
+    {{app.user.username}}
+    {% endif %}
 {% endblock %}

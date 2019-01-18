@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front;
+namespace App\Controller\Security;
 
 use App\Form\LordUserType;
 use App\Entity\LordUser;
@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render(
-            'Front/registration/register.html.twig',
+            'security/register.html.twig',
             array('form' => $form->createView())
         );
     }

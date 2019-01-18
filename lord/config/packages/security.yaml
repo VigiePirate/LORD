@@ -20,62 +20,46 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        admin:
-            pattern: ^/admin
-            anonymous: true
-
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path:     /admin
-
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            form_login:
-                login_path: admin_login
-                check_path: admin_login
-                username_parameter: email
-                password_parameter: password
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            # https://symfony.com/doc/current/reference/configuration/security.html#reference-security-firewall-form-login
-            logout:
-                path: admin_logout
-                target: admin_login
-                invalidate_session: false
-
-        front:
+        main:
+            # this firewall applies to all URLs
             pattern: ^/
+
+            # but the firewall does not require login on every page
+            # denying access is done in access_control or in your controllers
             anonymous: true
 
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path:     /
+            # remember_me:
+            #     secret:   '%kernel.secret%'
+            #     lifetime: 604800 # 1 week in seconds
+            #     path:     /
 
-            # activate different ways to authenticate
-
-            # http_basic: true
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
+            # This allows the user to login by submitting a username and password
+            # Reference: https://symfony.com/doc/current/security/form_login_setup.html
             form_login:
-                login_path: login
-                check_path: login
+                # The route name that the login form submits to
+                check_path: security_login
+                # The name of the route where the login form lives
+                # When the user tries to access a protected page, they are redirected here
+                login_path: security_login
                 username_parameter: email
                 password_parameter: password
-            # https://symfony.com/doc/current/security/form_login_setup.html
+                # Secure the login form against CSRF
+                # Reference: https://symfony.com/doc/current/security/csrf_in_login_form.html
+                csrf_token_generator: security.csrf.token_manager
+                # The page users are redirect to when there is no previous page stored in the
+                # session (for example when the users access directly to the login page).
+                default_target_path: homepage
+
             # https://symfony.com/doc/current/reference/configuration/security.html#reference-security-firewall-form-login
             logout:
-                path: logout
-                target: login
-                invalidate_session: false
+                # The route name the user can go to in order to logout
+                path: security_logout
+                # The name of the route to redirect to after logging out
+                target: homepage
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
