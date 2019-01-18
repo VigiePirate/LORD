@@ -1,14 +1,25 @@
+
+{#
+   This is the base template used as the application layout which contains the
+   common elements and decorates all the other templates.
+   See https://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts
+#}
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+        {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+        {% endblock %}
     </head>
-    <body>
+    <body id="{% block body_id %}{% endblock %}">
+        {% block header %}{% endblock %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
         <script src="{{ asset('build/app.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

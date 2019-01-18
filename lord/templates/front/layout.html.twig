@@ -8,28 +8,8 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-{{ include('admin/_header.html.twig') }}
+{{ include('front/_header.html.twig') }}
 {% endblock %}
-
 {% block body %}
-<div id="wrapper">
-      {{ include('admin/_sidebar.html.twig') }}
 
-      <main id="content-wrapper">
-         <div class="container-fluid">
-            {% block main %}{% endblock %}
-         </div>
-      </main>
-</div>
-{% endblock %}
-
-{% block footer %}
-<!-- Sticky Footer -->
-<footer class="sticky-footer">
-<div class="container my-auto">
-   <div class="copyright text-center my-auto">
-      <span>Copyright © LORD <?= date('Y'); ?></span>
-   </div>
-</div>
-</footer>
 {% endblock %}
