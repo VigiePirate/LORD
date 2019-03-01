@@ -12,24 +12,28 @@
 {% endblock %}
 
 {% block body %}
-<div id="wrapper">
-      {{ include('admin/_sidebar.html.twig') }}
-
-      <main id="content-wrapper">
-         <div class="container-fluid">
-            {% block main %}{% endblock %}
-         </div>
-      </main>
-</div>
-{% endblock %}
-
-{% block footer %}
-<!-- Sticky Footer -->
-<footer class="sticky-footer">
-<div class="container my-auto">
-   <div class="copyright text-center my-auto">
-      <span>Copyright © LORD <?= date('Y'); ?></span>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-2">
+         {{ include('admin/_sidebar.html.twig') }}
+      </div>
+      <div class="col-md-10">
+         <main id="content-wrapper">
+            <div class="container-fluid">
+               {% block main %}{% endblock %}
+            </div>
+         </main>
+      </div>
    </div>
 </div>
-</footer>
+   {% block footer %}
+   <!-- Sticky Footer -->
+   <footer class="sticky-footer">
+   <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+         <span>Copyright © LORD <?= date('Y'); ?></span>
+      </div>
+   </div>
+   </footer>
+   {% endblock %}
 {% endblock %}

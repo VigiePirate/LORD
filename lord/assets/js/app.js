@@ -7,7 +7,6 @@
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 import $ from "jquery";
 import boostrap from "bootstrap";
-import sbadmin from "startbootstrap-sb-admin";
 
 // any CSS you require will output into a single css file (app.css in this case)
 import * as css from "../scss/app.scss";
