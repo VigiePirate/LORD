@@ -1,0 +1,59 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main %}
+
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            <h2>Liste des rateries enregistrées au LORD</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Préfix</th>
+                        <th scope="col">Commentaire</th>
+                        <th scope="col">Image de Couverture</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Validée</th>
+                        <th scope="col">Date de naissance ?</th>
+                        <th scope="col">Date de création</th>
+                        <th scope="col">Date de dernière mise à jour</th>
+                        <th scope="col">Propriétaire</th>
+                        <th scope="col">actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lord_rattery in lord_ratteries %}
+                    <tr>
+                        <td>{{ lord_rattery.ratteryId }}</td>
+                        <td>{{ lord_rattery.ratteryName }}</td>
+                        <td>{{ lord_rattery.rateriePrefix }}</td>
+                        <td>{{ lord_rattery.ratteryComments }}</td>
+                        <td>{{ lord_rattery.ratteryPicture }}</td>
+                        <td>{{ lord_rattery.ratteryStatus ? 'Yes' : 'No' }}</td>
+                        <td>{{ lord_rattery.ratteryValidated ? 'Yes' : 'No' }}</td>
+                        <td>{{ lord_rattery.ratteryDateBirth ? lord_rattery.ratteryDateBirth|date('Y-m-d') : '' }}</td>
+                        <td>{{ lord_rattery.ratteryDateCreation ? lord_rattery.ratteryDateCreation|date('Y-m-d') : '' }}</td>
+                        <td>{{ lord_rattery.ratteryDateLastUpdate ? lord_rattery.ratteryDateLastUpdate|date('Y-m-d') : '' }}</td>
+                        <td>{{ lord_rattery.userOwner.id ? lord_rattery.userOwner.id : lord_rattery.userOwner.id }}</td>
+                        <td>
+                            <a href="{{ path('lord_rattery_show', {'ratteryId': lord_rattery.ratteryId}) }}">show</a>
+                            <a href="{{ path('lord_rattery_edit', {'ratteryId': lord_rattery.ratteryId}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11">Aucune raterie trouvée</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="{{ path('lord_rattery_new') }}">Créer une nouvelle raterie</a>
+{% endblock %}

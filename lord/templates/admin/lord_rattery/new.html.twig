@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LordRattery{% endblock %}
+
+{% block body %}
+    <h1>Create new LordRattery</h1>
+
+    {{ include('lord_rattery/_form.html.twig') }}
+
+    <a href="{{ path('lord_rattery_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LordRattery{% endblock %}
+
+{% block body %}
+    <h1>LordRattery</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>RatteryId</th>
+                <td>{{ lord_rattery.ratteryId }}</td>
+            </tr>
+            <tr>
+                <th>RatteryName</th>
+                <td>{{ lord_rattery.ratteryName }}</td>
+            </tr>
+            <tr>
+                <th>RateriePrefix</th>
+                <td>{{ lord_rattery.rateriePrefix }}</td>
+            </tr>
+            <tr>
+                <th>RatteryComments</th>
+                <td>{{ lord_rattery.ratteryComments }}</td>
+            </tr>
+            <tr>
+                <th>RatteryPicture</th>
+                <td>{{ lord_rattery.ratteryPicture }}</td>
+            </tr>
+            <tr>
+                <th>RatteryStatus</th>
+                <td>{{ lord_rattery.ratteryStatus ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>RatteryValidated</th>
+                <td>{{ lord_rattery.ratteryValidated ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>RatteryDateBirth</th>
+                <td>{{ lord_rattery.ratteryDateBirth ? lord_rattery.ratteryDateBirth|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RatteryDateCreation</th>
+                <td>{{ lord_rattery.ratteryDateCreation ? lord_rattery.ratteryDateCreation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RatteryDateLastUpdate</th>
+                <td>{{ lord_rattery.ratteryDateLastUpdate ? lord_rattery.ratteryDateLastUpdate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lord_rattery_index') }}">back to list</a>
+
+    <a href="{{ path('lord_rattery_edit', {'ratteryId': lord_rattery.ratteryId}) }}">edit</a>
+
+    {{ include('admin/lord_rattery/_delete_form.html.twig') }}
+{% endblock %}

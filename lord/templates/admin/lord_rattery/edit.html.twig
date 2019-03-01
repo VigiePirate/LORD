@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit LordRattery{% endblock %}
+
+{% block body %}
+    <h1>Edit LordRattery</h1>
+
+    {{ include('admin/lord_rattery/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('lord_rattery_index') }}">back to list</a>
+
+    {{ include('admin/lord_rattery/_delete_form.html.twig') }}
+{% endblock %}
