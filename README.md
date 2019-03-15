@@ -45,14 +45,18 @@ Commencez par cloner le projet && cd si vous ne l'avez pas encore :D
 Modifier la ligne DATABASE_URL du fichier .env (fichier de configuration spécifique à chaque développeur
 non commité, la configuration exemple se trouve dans .env.dist, qui est commité).
 
-L'ORM (composant permettant de gérer la base de données en fonction des entités) utilisé est [Doctrine](https://symfony.com/doc/current/doctrine.html) :
+L'ORM (composant permettant de gérer la base de données en fonction des entités) utilisé est [Doctrine](https://symfony.com/doc/current/doctrine.html). Les instructions qui suivent permettent de démarrer un projet vierge au niveau de la BDD (ce qui n'est pas notre cas) :
 
-    php bin/console doctrine:database:create
-    php bin/console server:run
+    php bin/console doctrine:database:create // création de la BDD
+    php bin/console server:run // lancement du serveur
 
-La base est créée, le serveur php est lancé...mais la base est vide !
+Ceci permet de créer une base (vide) et de lancer le serveur PHP.
+
+Pour nous, il faudra importer la base de PA (cf doc d'installation branche PA). Il y aura certainement des erreurs à régler.
 Il faudra malheureusement effectuer un travail de revue de la base lordrat_v2 pour voir ce qu'il faut
 garder, et on pourra créer un script d'initiation de la base pour importer le contenu nécessaire.
+
+Si besoin de rajouter un champs à une entité (LordRattery par exemple) ou de créer une entité :
 
     // créer ou mettre à jour une entité :
     php bin/console make:entity
