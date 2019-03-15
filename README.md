@@ -52,7 +52,7 @@ L'ORM (composant permettant de gérer la base de données en fonction des entit�
 
 Ceci permet de créer une base (vide) et de lancer le serveur PHP.
 
-Pour nous, il faudra importer la base de PA (cf doc d'installation branche PA). Il y aura certainement des erreurs à régler.
+Pour nous, il faudra importer la base de PA ([cf doc d'installation branche PA](https://github.com/VigiePirate/LORD/blob/PA/database/README.md)). Il y aura certainement des erreurs à régler.
 Il faudra malheureusement effectuer un travail de revue de la base lordrat_v2 pour voir ce qu'il faut
 garder, et on pourra créer un script d'initiation de la base pour importer le contenu nécessaire.
 
