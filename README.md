@@ -34,9 +34,11 @@ Installation de différents paquets npm nécessaires
 
 ### Set up
 
-- Commencez par cloner le projet && cd si vous ne l'avez pas encore :D
-- composer install
-- npm install
+Commencez par cloner le projet && cd si vous ne l'avez pas encore :D
+    
+    git clone git@github.com:VigiePirate/LORD.git && cd LORD/lord
+    composer install
+    npm install
 
 #### Database
 
@@ -60,8 +62,6 @@ garder, et on pourra créer un script d'initiation de la base pour importer le c
 
     // mettre à jour la base
     php bin/console doctrine:migrations:migrate
-
-php bin/console doctrine:database:create
 
 #### Assets
 
@@ -118,4 +118,10 @@ Toute la doc qui fait référence à doctrine se trouve [ici](https://symfony.co
 
 @TODO:
 
-- inscription front et/ou admin ?
+- Inscription et login :heavy_check_mark:
+- Gestion des rôles (admin et user) :heavy_check_mark:
+- Admin :
+    - afficher la liste des rateries :heavy_check_mark:
+    - éditer une raterie :heavy_check_mark:
+    - ...
+- Front : tout
