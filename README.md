@@ -1,6 +1,6 @@
 # LORD
 
-Livre des Origines du Rat Domestique Version 2
+Livre des Origines du Rat Domestique Version 2.0. **This project is abandoned. See CakeLORD project for follow-up.**
 
 ## Vue générale
 
